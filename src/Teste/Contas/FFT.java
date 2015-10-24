@@ -9,7 +9,7 @@ import oficinas_3.*;
 import java.awt.Color;
 import java.lang.reflect.Array;
 import java.math.MathContext;
-
+//Comentario de teste
 public class FFT extends FourierTransform {
 
     /**
