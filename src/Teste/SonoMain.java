@@ -5,6 +5,7 @@
  */
 package Teste;
 
+import Teste.Csv.GenerateCsv;
 import Teste.RealTime.RealTime;
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -28,6 +29,11 @@ public class SonoMain extends JFrame{
             JFrame frame = new SonoMain();
             frame.pack();
             frame.setVisible(true);
+            // Gerando o csv teste
+            GenerateCsv a = new GenerateCsv();
+            a.CreateCsv("noite.csv");
+                
+            
     }
     
     public SonoMain(){

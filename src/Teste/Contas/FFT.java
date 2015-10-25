@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Contas;
+package Teste.Contas;
 
-import oficinas_3.*;
+
 import java.awt.Color;
 import java.lang.reflect.Array;
 import java.math.MathContext;

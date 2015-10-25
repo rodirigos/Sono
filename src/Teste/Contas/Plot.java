@@ -1,6 +1,6 @@
-package Contas;
+package Teste.Contas;
 
-import oficinas_3.*;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
