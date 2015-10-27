@@ -11,6 +11,7 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Scanner;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
@@ -21,6 +22,7 @@ import javax.swing.JFrame;
 public class SonoMain extends JFrame{
     
     private RealTime audiotest;
+    private Scanner inputKey = new Scanner(System.in);
     
     //GUI
     JButton capture,stop,play;
@@ -59,12 +61,17 @@ public class SonoMain extends JFrame{
     content.add(play, BorderLayout.SOUTH);
     
     audiotest= new RealTime();
+    TgetInput t1= new TgetInput(audiotest);
+//    System.out.println("\nDigite algo e aperte entter para começar.");
+//    String s= inputKey.nextLine();
+//    if(s.equals("")==false){
+//        
+//    }
     }
     
  
     public void captureAudio(){
-        audiotest.startRecord();
-        
+        audiotest.startRecord();  
     }
     
     public void stopCapture(){

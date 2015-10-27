@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sonoMain;
+package Teste;
 
-import GUI.JanelaPrincipal;
+import Teste.RealTime.RealTime;
+import sonoMain.*;
 import sonoMain.realtime.RealTime1;
 import java.util.Scanner;
 
@@ -15,14 +16,13 @@ import java.util.Scanner;
  */
 public class TgetInput extends Thread {
     
-    private SonoControl control;
-    RealTime1 realtime;
+
+    RealTime realtime;
     private Scanner in = new Scanner(System.in);
     private boolean stop=false;
     
-    TgetInput(SonoControl s){
-        control=s;
-        realtime=RealTime1.getInstance();
+    TgetInput(RealTime r){
+        realtime=r;
         this.start();
     }
     
@@ -41,29 +41,6 @@ public class TgetInput extends Thread {
                         + "\n stop-- para de capturar ");
         while(stop!=true){
             String input=in.nextLine();
-            //System.out.println("\n input: "+input);
-//            if(input.equals("s") || input.equals("S") ){
-//              System.out.println("\n Abrir áudio de arquivo? (s/n)");
-//              String input1=in.nextLine();
-//              if(input1.equals("s") || input1.equals("S") ){
-//                  realtime.fileInput=true;
-//              }
-//              else{
-//                  realtime.fileInput=false;
-//              }
-//              control.janela= new JanelaPrincipal();
-//              
-//           }
-//            else if(input.equals("n") ||input.equals("N") ){
-//                 System.out.println("\n Abrir áudio de arquivo? (s/n)");
-//                 String input1=in.nextLine();
-//                 if(input1.equals("s") || input1.equals("S") ){
-//                     realtime.fileInput=true;
-//                 }
-//                 else{
-//                     realtime.fileInput=false;
-//                 }
-//            }
             if(input.equals("start")==true){
                 realtime.startRecord();
             }
