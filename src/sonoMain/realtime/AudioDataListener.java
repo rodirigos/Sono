@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Teste.RealTime;
+package sonoMain.realtime;
 
 import ddf.minim.AudioListener;
+import ddf.minim.Minim;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -16,10 +17,12 @@ import java.util.Arrays;
 public class AudioDataListener implements AudioListener {
     
     private ArrayList<float[]> bufferSamples;
+    private Minim audioContext;
     public boolean saveData;
     public int sampleCounter,sampleSize;
     
-    public AudioDataListener(){
+    public AudioDataListener(Minim m){
+        audioContext=m;
         bufferSamples= new ArrayList();
         saveData=false;
         sampleCounter=0;

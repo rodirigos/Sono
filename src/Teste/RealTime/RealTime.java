@@ -5,6 +5,7 @@
  */
 package Teste.RealTime;
 
+import sonoMain.realtime.AudioDataListener;
 import ddf.minim.AudioBuffer;
 import ddf.minim.AudioInput;
 import ddf.minim.AudioPlayer;
@@ -30,10 +31,11 @@ AudioDataListener dataListener;
 public RealTime(){
     minim = new Minim(this);
     input= minim.getLineIn(Minim.MONO, 1024, 8192, 16);
-    dataListener = new AudioDataListener();
+    dataListener = new AudioDataListener(minim);
     input.addListener(dataListener);
     audioData=input.mix;
     recorder=minim.createRecorder(input,"AudioSample.wav");
+   
 
 }
 
