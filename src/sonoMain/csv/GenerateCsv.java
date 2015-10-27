@@ -10,7 +10,8 @@ import java.io.IOException;
 
 /**
  *
- * @author Rodrigo
+ * @author Rodrigo 
+ * Essa classe gera um csv
  */
 public class GenerateCsv {
 public GenerateCsv(){}
@@ -20,7 +21,13 @@ public GenerateCsv(){}
             + "3,30,Ronco \n"
             + "4,21,Barulho\n"
             + "5,30,Ronco";
-
+/***
+ * Criacao do csv
+ * 
+     * futuros parametros: vetor de eventos( hora, minutos e tipo)
+     * @param sFileName: Nome do arquivo a ser criado
+     * 
+ */
     public void CreateCsv(String sFileName) {
         try {
             // Criar arquivo csv usando dados de um vetor que sera recebido 

@@ -35,7 +35,8 @@ public RealTime(){
     input.addListener(dataListener);
     audioData=input.mix;
     recorder=minim.createRecorder(input,"AudioSample.wav");
-   
+    System.out.println(input.getVolume());
+  
 
 }
 
