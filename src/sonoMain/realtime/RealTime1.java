@@ -80,7 +80,7 @@ public class RealTime1 {
             dataListener = new AudioDataListener(minim);
             input.addListener(dataListener);
             audioData=input.mix;
-            recorder=minim.createRecorder(input,"AudioSample.wav");
+            recorder=minim.createRecorder(input,"InputSample.wav");
         }
     }
 

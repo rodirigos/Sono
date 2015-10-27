@@ -20,6 +20,7 @@ public class SonoControl {
     
     public SonoControl(){
        realTime=RealTime1.getInstance();
+       realTime.startAudioInput(false);
        tInput = new TgetInput(this);
     }
     
