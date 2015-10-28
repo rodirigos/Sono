@@ -28,11 +28,11 @@ public GenerateCsv(){}
      * @param sFileName: Nome do arquivo a ser criado
      * 
  */
-    public void CreateCsv(String sFileName) {
+    public void CreateCsv(String sFileName,String data) {
         try {
             // Criar arquivo csv usando dados de um vetor que sera recebido 
             FileWriter writer = new FileWriter(sFileName);
-            writer.append(testeCsv);
+            writer.append(data);
             writer.flush();
 	    writer.close();
 

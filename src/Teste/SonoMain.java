@@ -33,16 +33,21 @@ public class SonoMain extends JFrame{
             frame.setVisible(true);
             // Gerando o csv teste
             GenerateCsv a = new GenerateCsv();
-            a.CreateCsv("noite.csv");            
+            String testeCsv = "Horas,Minutos,Tipo\n"
+            + "1,20,Ronco\n"
+            + "3,30,Ronco \n"
+            + "4,21,Barulho\n"
+            + "5,30,Ronco";
+            a.CreateCsv("noite.csv",testeCsv);
+                
             
     }
-  
+    
     public SonoMain(){
     super("Capture Sound Demo");
     setDefaultCloseOperation(EXIT_ON_CLOSE);
     Container content = getContentPane();
-    
-    
+ 
     
     listener= new ButtonListener();
     capture = new JButton("Capture");
@@ -69,7 +74,6 @@ public class SonoMain extends JFrame{
 //    }
     }
     
- 
     public void captureAudio(){
         audiotest.startRecord();  
     }
@@ -80,7 +84,7 @@ public class SonoMain extends JFrame{
     }
     
     public void playAudio(){
-      
+        
     }
     
         private class ButtonListener implements ActionListener
