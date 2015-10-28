@@ -70,14 +70,14 @@ public class RealTime1 {
 //                dataListener.samples(multiChannelBuffer);
 //            }
             player=minim.loadFile("InputSample.wav", 1024);
-            dataListener = new AudioDataListener(minim);
+            //dataListener = new AudioDataListener(this);
             player.addListener(dataListener);
             player.play();
             audioData=player.mix;
         }else{
             fileInput=false;
             input= minim.getLineIn(Minim.MONO, 1024, 8192, 16); 
-            dataListener = new AudioDataListener(minim);
+           // dataListener = new AudioDataListener(minim);
             input.addListener(dataListener);
             audioData=input.mix;
             recorder=minim.createRecorder(input,"InputSample.wav");

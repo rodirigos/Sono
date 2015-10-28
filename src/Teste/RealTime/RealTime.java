@@ -24,14 +24,14 @@ public class RealTime {
 Minim minim;
 AudioPlayer player;
 AudioInput input;
-AudioBuffer audioData;
+public AudioBuffer audioData;
 AudioRecorder recorder;
 AudioDataListener dataListener;
 
 public RealTime(){
     minim = new Minim(this);
     input= minim.getLineIn(Minim.MONO, 1024, 8192, 16);
-    dataListener = new AudioDataListener(minim);
+    dataListener = new AudioDataListener(this);
     input.addListener(dataListener);
     audioData=input.mix;
     recorder=minim.createRecorder(input,"AudioSample.wav");
@@ -43,6 +43,7 @@ public float[] getData(){
       
       float[] dataArray= dataListener.getAllSamples();
       System.out.println("\nData Len: "+dataArray.length);
+      System.out.println("\n Valor RMS: "+dataListener.getRMS());
       for(int i=0;i<dataArray.length;i++){
           System.out.println("["+i+"]="+dataArray[i]);
       }

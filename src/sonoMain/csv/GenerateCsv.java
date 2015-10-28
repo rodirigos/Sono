@@ -21,11 +21,11 @@ public GenerateCsv(){}
             + "4,21,Barulho\n"
             + "5,30,Ronco";
 
-    public void CreateCsv(String sFileName) {
+    public void CreateCsv(String sFileName,String data) {
         try {
             // Criar arquivo csv usando dados de um vetor que sera recebido 
             FileWriter writer = new FileWriter(sFileName);
-            writer.append(testeCsv);
+            writer.append(data);
             writer.flush();
 	    writer.close();
 

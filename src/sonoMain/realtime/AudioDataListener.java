@@ -5,6 +5,7 @@
  */
 package sonoMain.realtime;
 
+import Teste.RealTime.RealTime;
 import ddf.minim.AudioListener;
 import ddf.minim.Minim;
 import java.util.ArrayList;
@@ -17,15 +18,17 @@ import java.util.Arrays;
 public class AudioDataListener implements AudioListener {
     
     private ArrayList<float[]> bufferSamples;
-    private Minim audioContext;
+    private float rms;
+    private RealTime realTime;
     public boolean saveData;
     public int sampleCounter,sampleSize;
     
-    public AudioDataListener(Minim m){
-        audioContext=m;
+    public AudioDataListener(RealTime r){
+        realTime=r;
         bufferSamples= new ArrayList();
         saveData=false;
         sampleCounter=0;
+        rms=0;
     }
     
     /**
@@ -38,6 +41,7 @@ public class AudioDataListener implements AudioListener {
         if(saveData==true){
             bufferSamples.add(samp);
             sampleCounter++;
+            rms+=realTime.audioData.level();
             sampleSize=samp.length;
             System.out.println("\n adicionou "+sampleSize+" no vetor\nvetor tem "+bufferSamples.size()+"samples");
             System.out.println("samples: "+Arrays.toString(samp));
@@ -52,6 +56,7 @@ public class AudioDataListener implements AudioListener {
     public float[] getAllSamples(){
         float[] allSamples= new float[sampleSize*bufferSamples.size()];
         int copyCounter=0;
+        rms=rms/sampleCounter;
         for(int i=0;i<bufferSamples.size();i++){
             System.arraycopy(bufferSamples.get(i), 0, allSamples,copyCounter, bufferSamples.get(i).length);
             copyCounter+=bufferSamples.get(i).length;
@@ -59,9 +64,12 @@ public class AudioDataListener implements AudioListener {
         return allSamples;
     }
     
+    public float getRMS(){return rms;}
+    
     public void clearData(){
         bufferSamples.clear();
         sampleCounter=0;
+        rms=0;
     }
     
 }

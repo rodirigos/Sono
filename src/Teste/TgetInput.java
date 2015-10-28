@@ -6,8 +6,6 @@
 package Teste;
 
 import Teste.RealTime.RealTime;
-import sonoMain.*;
-import sonoMain.realtime.RealTime1;
 import java.util.Scanner;
 
 /**Classe auxiliar para pegar o input do usuário
@@ -38,7 +36,8 @@ public class TgetInput extends Thread {
         
         System.out.println("\n --------SONO-------\n ");
         System.out.println("\n COMANDOS VÁLIDOS: \n start-- começa a capturar o audio"
-                        + "\n stop-- para de capturar ");
+                        + "\n stop-- para de capturar "+
+                          "\n exit-- sai do programa");
         while(stop!=true){
             String input=in.nextLine();
             if(input.equals("start")==true){
@@ -48,9 +47,13 @@ public class TgetInput extends Thread {
                      realtime.stopRecord();
                      realtime.getData();
             }
+            else if(input.equals("exit")==true){
+                Runtime.getRuntime().exit(0);
+            }
             else{
                 System.out.println("\n COMANDOS VÁLIDOS: \n start-- começa a capturar o audio"
-                        + "\n stop-- para de capturar ");
+                        + "\n stop-- para de capturar "+
+                          "\n exit-- sai do programa");
             }
         }
     }
