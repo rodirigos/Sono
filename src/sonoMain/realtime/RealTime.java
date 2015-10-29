@@ -14,6 +14,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
+import sonoMain.Cortador;
 
 /**
  *
@@ -27,7 +28,8 @@ public static final int BITS_PER_SAMPLE=16;
 public static final int MAX_SAMPLES=80; //8192*10(segundos)/1024 amostras por buffer
 public AudioBuffer audioData;
 public LocalDateTime horaInicio;    
-    
+public Cortador cortador;
+
 Minim minim;
 AudioPlayer player;
 AudioInput input;
@@ -43,6 +45,10 @@ public RealTime(){
     recorder=minim.createRecorder(input,"AudioSample.wav");
 }
 
+public void setCortadorRef(Cortador c){
+    cortador=c;
+}
+
 public float[] getData(){ 
       
       float[] dataArray= dataListener.getAllSamples();
@@ -55,7 +61,7 @@ public float[] getData(){
 }
 
 public void startRecord(){
-    input.enableMonitoring();
+    input.enableMonitoring();//permite ouvir o áudio , questão de debug
     recorder.beginRecord();
     dataListener.saveData=true;
     horaInicio = LocalDateTime.now();

@@ -44,14 +44,14 @@ public class AudioDataListener implements AudioListener {
             sampleSize=samp.length;
             System.out.println("\nSAMPLECOUNTER:"+sampleCounter);
             if(sampleCounter>RealTime.MAX_SAMPLES){
+                realTime.cortador.cortarAudio(getAllSamples(), rms,RealTime.SAMPLE_RATE, realTime.horaInicio);
                 sampleCounter=0;
-                Cortador.cortarAudio(getAllSamples(), rms,RealTime.SAMPLE_RATE, realTime.horaInicio);
             }
-            else{
-                ////PRINT_DEBUG  
-                System.out.println("\n adicionou "+sampleSize+" no vetor\nvetor tem "+bufferSamples.size()+"samples");
-                System.out.println("samples: "+Arrays.toString(samp));
-            }
+//            else{
+//                ////PRINT_DEBUG  
+//                System.out.println("\n adicionou "+sampleSize+" no vetor\nvetor tem "+bufferSamples.size()+"samples");
+//                System.out.println("samples: "+Arrays.toString(samp));
+//            }
         }
     }
 

@@ -28,50 +28,53 @@ public class SonoMain extends JFrame{
     JButton capture,stop,play;
     ButtonListener listener;
     public static void main(String args[]){
-            JFrame frame = new SonoMain();
-            frame.pack();
-            frame.setVisible(true);
-            // Gerando o csv teste
-            GenerateCsv a = new GenerateCsv();
-            String testeCsv = "Horas,Minutos,Tipo\n"
-            + "1,20,Ronco\n"
-            + "3,30,Ronco \n"
-            + "4,21,Barulho\n"
-            + "5,30,Ronco";
-            a.CreateCsv("noite.csv",testeCsv);
-                
+        //inicia as partes do sistema
+        GerenciadorEventos gerenciador= new GerenciadorEventos();
+        Cortador cortador= new Cortador(gerenciador);
             
+        JFrame frame = new SonoMain(cortador);
+        frame.pack();
+        frame.setVisible(true);
+            // Gerando o csv teste
+        GenerateCsv a = new GenerateCsv();
+        String testeCsv = "Horas,Minutos,Tipo\n"
+        + "1,20,Ronco\n"
+        + "3,30,Ronco \n"
+        + "4,21,Barulho\n"
+        + "5,30,Ronco";
+        a.CreateCsv("noite.csv",testeCsv); 
     }
     
-    public SonoMain(){
-    super("Capture Sound Demo");
-    setDefaultCloseOperation(EXIT_ON_CLOSE);
-    Container content = getContentPane();
- 
-    
-    listener= new ButtonListener();
-    capture = new JButton("Capture");
-    capture.addActionListener(listener);
-    stop = new JButton("Stop");
-    stop.addActionListener(listener);
-    play = new JButton("Play");
-    play.addActionListener(listener);
-    
-    capture.setEnabled(true);
-    stop.setEnabled(true);
-    play.setEnabled(true);
- 
-    content.add(capture, BorderLayout.NORTH);
-    content.add(stop, BorderLayout.CENTER);
-    content.add(play, BorderLayout.SOUTH);
-    
-    audiotest= new RealTime();
-    TgetInput t1= new TgetInput(audiotest);
-//    System.out.println("\nDigite algo e aperte entter para começar.");
-//    String s= inputKey.nextLine();
-//    if(s.equals("")==false){
-//        
-//    }
+    public SonoMain(Cortador cortador){
+        super("Capture Sound Demo");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        Container content = getContentPane();
+
+
+        listener= new ButtonListener();
+        capture = new JButton("Capture");
+        capture.addActionListener(listener);
+        stop = new JButton("Stop");
+        stop.addActionListener(listener);
+        play = new JButton("Play");
+        play.addActionListener(listener);
+
+        capture.setEnabled(true);
+        stop.setEnabled(true);
+        play.setEnabled(true);
+
+        content.add(capture, BorderLayout.NORTH);
+        content.add(stop, BorderLayout.CENTER);
+        content.add(play, BorderLayout.SOUTH);
+
+        audiotest= new RealTime();
+        audiotest.setCortadorRef(cortador);
+        TgetInput t1= new TgetInput(audiotest);
+    //    System.out.println("\nDigite algo e aperte entter para começar.");
+    //    String s= inputKey.nextLine();
+    //    if(s.equals("")==false){
+    //        
+    //    }
     }
     
     public void captureAudio(){
