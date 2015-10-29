@@ -1,4 +1,4 @@
-package Teste.Serial;
+package sonoMain.Serial;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
