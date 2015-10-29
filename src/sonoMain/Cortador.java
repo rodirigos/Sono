@@ -14,23 +14,40 @@ import java.util.Arrays;
  */
 public class Cortador {
 
+private GerenciadorEventos gerenciador;
+    
+public  Cortador(GerenciadorEventos gE){
+    gerenciador= gE;
+}
 
-
-//    public float RMS(float Sinal_Original[]) {
-//        float rms = 0;
-//        int i;
-//        for (i = 0; i < Sinal_Original.length; i++) {
-//            rms += Math.pow(Sinal_Original[i], 2);
-//        }
-//        rms = (float) Math.sqrt(rms / Sinal_Original.length);
-//
-//        return rms;
-//    }
-
-    public static void cortarAudio(float[] sinalOriginal,float rms,int freqAmostragem,LocalDateTime horaInicio) {
+ 
+    /**
+     * Método chamado cada vez que o cortador separar um evento de áudio de 3s
+     * @param horaCalculada
+     * @param sinalEvento
+     * @param tipoEvento 
+     */
+    public void registrarEvento(LocalDateTime horaCalculada, float[] sinalEvento,String tipoEvento){
+        Evento e = new Evento(horaCalculada,sinalEvento,tipoEvento);
+        gerenciador.adicionarEvento(e);
+    }
+    
+    /**
+     * Método chamado pela Classe AudioDataListener (dentro do Realtime) a cada vez que a gravação atinge 10s
+     * @param sinalOriginal
+     * @param rms
+     * @param freqAmostragem
+     * @param horaInicio 
+     */
+    public  void cortarAudio(float[] sinalOriginal,float rms,int freqAmostragem,LocalDateTime horaInicio) {
 
             System.out.println("CHAMOU CORTADOR\nrms="+rms+"\nfreqAmostragem="+freqAmostragem+"\nhorainicio="+horaInicio+
                     "\nvetor:\n"+Arrays.toString(sinalOriginal));
+            
+            // EXEMPLO DE TESTE:
+            float sinalCortado[]= new float[1024];
+            System.arraycopy(sinalOriginal, 0, sinalCortado, 0, 1024);
+            registrarEvento(horaInicio.plusSeconds(10),sinalCortado,"Exemplo");
 //        int contJanela=1,y2=0, i, j, aux, aux2, tam = sinalOriginal.length;
 //        int theshold = 3;
 //        float TempoJanela = (float) 0.2, max = 0;
