@@ -5,8 +5,7 @@
  */
 package sonoMain;
 
-import GUI.JanelaPrincipal;
-import sonoMain.realtime.RealTime1;
+import sonoMain.realtime.RealTime;
 import java.util.Scanner;
 
 /**Classe auxiliar para pegar o input do usuário
@@ -15,14 +14,13 @@ import java.util.Scanner;
  */
 public class TgetInput extends Thread {
     
-    private SonoControl control;
-    RealTime1 realtime;
+
+    RealTime realtime;
     private Scanner in = new Scanner(System.in);
     private boolean stop=false;
     
-    TgetInput(SonoControl s){
-        control=s;
-        realtime=RealTime1.getInstance();
+    TgetInput(RealTime r){
+        realtime=r;
         this.start();
     }
     
@@ -38,32 +36,10 @@ public class TgetInput extends Thread {
         
         System.out.println("\n --------SONO-------\n ");
         System.out.println("\n COMANDOS VÁLIDOS: \n start-- começa a capturar o audio"
-                        + "\n stop-- para de capturar ");
+                        + "\n stop-- para de capturar "+
+                          "\n exit-- sai do programa");
         while(stop!=true){
             String input=in.nextLine();
-            //System.out.println("\n input: "+input);
-//            if(input.equals("s") || input.equals("S") ){
-//              System.out.println("\n Abrir áudio de arquivo? (s/n)");
-//              String input1=in.nextLine();
-//              if(input1.equals("s") || input1.equals("S") ){
-//                  realtime.fileInput=true;
-//              }
-//              else{
-//                  realtime.fileInput=false;
-//              }
-//              control.janela= new JanelaPrincipal();
-//              
-//           }
-//            else if(input.equals("n") ||input.equals("N") ){
-//                 System.out.println("\n Abrir áudio de arquivo? (s/n)");
-//                 String input1=in.nextLine();
-//                 if(input1.equals("s") || input1.equals("S") ){
-//                     realtime.fileInput=true;
-//                 }
-//                 else{
-//                     realtime.fileInput=false;
-//                 }
-//            }
             if(input.equals("start")==true){
                 realtime.startRecord();
             }
@@ -71,9 +47,14 @@ public class TgetInput extends Thread {
                      realtime.stopRecord();
                      realtime.getData();
             }
+            else if(input.equals("exit")==true){
+                realtime.quitprogram();
+                Runtime.getRuntime().exit(0);
+            }
             else{
                 System.out.println("\n COMANDOS VÁLIDOS: \n start-- começa a capturar o audio"
-                        + "\n stop-- para de capturar ");
+                        + "\n stop-- para de capturar "+
+                          "\n exit-- sai do programa");
             }
         }
     }

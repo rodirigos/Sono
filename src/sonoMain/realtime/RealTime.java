@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Teste.RealTime;
+package sonoMain.realtime;
 
-import sonoMain.realtime.AudioDataListener;
 import ddf.minim.AudioBuffer;
 import ddf.minim.AudioInput;
 import ddf.minim.AudioPlayer;
@@ -14,29 +13,34 @@ import ddf.minim.Minim;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.time.LocalDateTime;
 
 /**
  *
  * @author luisfg30
  */
 public class RealTime {
+
+public static final int SAMPLE_RATE=8192;
+public static final int BUFFER_SIZE=1024;
+public static final int BITS_PER_SAMPLE=16;
+public static final int MAX_SAMPLES=80; //8192*10(segundos)/1024 amostras por buffer
+public AudioBuffer audioData;
+public LocalDateTime horaInicio;    
     
 Minim minim;
 AudioPlayer player;
 AudioInput input;
-public AudioBuffer audioData;
 AudioRecorder recorder;
 AudioDataListener dataListener;
 
 public RealTime(){
     minim = new Minim(this);
-    input= minim.getLineIn(Minim.MONO, 1024, 8192, 16);
+    input= minim.getLineIn(Minim.MONO, BUFFER_SIZE, SAMPLE_RATE, BITS_PER_SAMPLE);
     dataListener = new AudioDataListener(this);
     input.addListener(dataListener);
     audioData=input.mix;
     recorder=minim.createRecorder(input,"AudioSample.wav");
-   
-
 }
 
 public float[] getData(){ 
@@ -54,6 +58,7 @@ public void startRecord(){
     input.enableMonitoring();
     recorder.beginRecord();
     dataListener.saveData=true;
+    horaInicio = LocalDateTime.now();
 }
 
 public void stopRecord(){

@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Teste;
+package sonoMain;
 
 import sonoMain.csv.GenerateCsv;
-import Teste.RealTime.RealTime;
+import sonoMain.realtime.RealTime;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.event.ActionEvent;

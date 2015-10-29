@@ -1,4 +1,4 @@
-package Teste.Serial;
+package sonoMain.Serial;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -14,8 +14,8 @@ public class SerialTest implements SerialPortEventListener {
 SerialPort serialPort;
     /** The port we're normally going to use. */
 private static final String PORT_NAMES[] = {               //   "/dev/tty.usbserial-A9007UX1", // Mac OS X
-        "/dev/ttyUSB0" //, // Linux
-        //"COM35", // Windows
+        "/dev/ttyUSB0", //, // Linux
+        "COM35", // Windows
 };
 private BufferedReader input;
 private OutputStream output;

@@ -5,11 +5,10 @@
  */
 package sonoMain.realtime;
 
-import Teste.RealTime.RealTime;
 import ddf.minim.AudioListener;
-import ddf.minim.Minim;
 import java.util.ArrayList;
 import java.util.Arrays;
+import sonoMain.Cortador;
 
 /**
  *Esta classe implementa uma interface que é chamada pelo buffer do programa
@@ -43,8 +42,16 @@ public class AudioDataListener implements AudioListener {
             sampleCounter++;
             rms+=realTime.audioData.level();
             sampleSize=samp.length;
-            System.out.println("\n adicionou "+sampleSize+" no vetor\nvetor tem "+bufferSamples.size()+"samples");
-            System.out.println("samples: "+Arrays.toString(samp));
+            System.out.println("\nSAMPLECOUNTER:"+sampleCounter);
+            if(sampleCounter>RealTime.MAX_SAMPLES){
+                sampleCounter=0;
+                Cortador.cortarAudio(getAllSamples(), rms,RealTime.SAMPLE_RATE, realTime.horaInicio);
+            }
+            else{
+                ////PRINT_DEBUG  
+                System.out.println("\n adicionou "+sampleSize+" no vetor\nvetor tem "+bufferSamples.size()+"samples");
+                System.out.println("samples: "+Arrays.toString(samp));
+            }
         }
     }
 
