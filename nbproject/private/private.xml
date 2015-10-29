@@ -3,35 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
+            <file>file:/C:/GIT/Sono_GIT/src/sonoMain/Evento.java</file>
             <file>file:/C:/GIT/Sono_GIT/src/ddf/minim/SignalSplitter.java</file>
+            <file>file:/C:/GIT/Sono_GIT/src/sonoMain/GerenciadorEventos.java</file>
             <file>file:/C:/GIT/Sono_GIT/src/sonoMain/TgetInput.java</file>
             <file>file:/C:/GIT/Sono_GIT/src/sonoMain/Cortador.java</file>
             <file>file:/C:/GIT/Sono_GIT/src/sonoMain/realtime/RealTime.java</file>
             <file>file:/C:/GIT/Sono_GIT/src/sonoMain/realtime/AudioDataListener.java</file>
             <file>file:/C:/GIT/Sono_GIT/src/sonoMain/SonoMain.java</file>
-=======
-            <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/Sono3/src/sonoMain/realtime/RealTime1.java</file>
-            <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/Sono3/src/ddf/minim/Minim.java</file>
-            <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/Sono3/src/Teste/FloatSampleTools.java</file>
-            <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/Sono3/src/sonoMain/SonoMain1.java</file>
-            <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/Sono3/src/sonoMain/contas/Plot.java</file>
-            <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/Sono3/src/sonoMain/realtime/AudioDataListener.java</file>
-            <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/Sono3/src/Teste/Capture.java</file>
-            <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/Sono3/src/ddf/minim/AudioInput.java</file>
-            <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/Sono3/documentation/audioinput_class_audioinput.html</file>
-            <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/Sono3/nbproject/build-impl.xml</file>
-            <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/Sono3/src/Teste/RealTime/RealTime.java</file>
-            <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/Sono3/src/sonoMain/contas/Resultado.java</file>
-            <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/Sono3/src/Teste/FloatSampleBuffer.java</file>
-            <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/Sono3/src/Teste/JavaSoundRecorder.java</file>
-            <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/Sono3/src/sonoMain/TgetInput.java</file>
-            <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/Sono3/src/Teste/Serial/SerialTest.java</file>
-            <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/Sono3/src/Teste/SonoMain.java</file>
-            <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/Sono3/src/sonoMain/SonoControl.java</file>
-            <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/Sono3/src/sonoMain/csv/GenerateCsv.java</file>
-            <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/Sono3/src/GUI/InputPanel.java</file>
->>>>>>> f275728ba7f46af85245742ca895d012a5cf859c
         </group>
     </open-files>
 </project-private>
