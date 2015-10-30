@@ -33,13 +33,13 @@ public class SonoMain extends JFrame{
         GerenciadorEventos gerenciador= new GerenciadorEventos();
         Cortador cortador= new Cortador(gerenciador);
             
-        JFrame frame = new SonoMain(cortador);
+        JFrame frame = new SonoMain(cortador,gerenciador);
         frame.pack();
         frame.setVisible(true);
       
     }
     
-    public SonoMain(Cortador cortador){
+    public SonoMain(Cortador cortador,GerenciadorEventos gerenciador){
         super("Capture Sound Demo");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         Container content = getContentPane();
@@ -63,7 +63,7 @@ public class SonoMain extends JFrame{
 
         audiotest= new RealTime();
         audiotest.setCortadorRef(cortador);
-        TgetInput t1= new TgetInput(audiotest);
+        TgetInput t1= new TgetInput(audiotest,gerenciador);
     //    System.out.println("\nDigite algo e aperte entter para começar.");
     //    String s= inputKey.nextLine();
     //    if(s.equals("")==false){

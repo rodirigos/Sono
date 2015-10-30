@@ -54,9 +54,9 @@ public float[] getData(){
       float[] dataArray= dataListener.getAllSamples();
       System.out.println("\nData Len: "+dataArray.length);
       System.out.println("\n Valor RMS: "+dataListener.getRMS());
-      for(int i=0;i<dataArray.length;i++){
-          System.out.println("["+i+"]="+dataArray[i]);
-      }
+//      for(int i=0;i<dataArray.length;i++){
+//          System.out.println("["+i+"]="+dataArray[i]);
+//      }
       return dataArray;
 }
 
