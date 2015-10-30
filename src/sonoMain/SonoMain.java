@@ -35,14 +35,7 @@ public class SonoMain extends JFrame{
         JFrame frame = new SonoMain(cortador);
         frame.pack();
         frame.setVisible(true);
-            // Gerando o csv teste
-        GenerateCsv a = new GenerateCsv();
-        String testeCsv = "Horas,Minutos,Tipo\n"
-        + "1,20,Ronco\n"
-        + "3,30,Ronco \n"
-        + "4,21,Barulho\n"
-        + "5,30,Ronco";
-        a.CreateCsv("noite.csv",testeCsv); 
+      
     }
     
     public SonoMain(Cortador cortador){

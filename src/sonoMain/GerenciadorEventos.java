@@ -16,6 +16,15 @@ public class GerenciadorEventos {
     
     private ArrayList<Evento> eventosRegistrados;
     
+    /* Pegar o array terminado para a criacao do csv(pode ser colocado no
+     mesmo para ser protected mas por enquanto vou fazer um getEvento ok?
+     Maneira alternativa: adicionar em metodo addCsv depende de como sera feita
+    o gerenciamento de eventos. Se vai existir um gerenciador para cada 10 segundos
+    ou se tera um gerenciador contendo todos os eventos*/
+    public ArrayList<Evento> getEventosRegistrados() {
+        return eventosRegistrados;
+    }
+   
     public GerenciadorEventos(){
         eventosRegistrados= new ArrayList();
     }

@@ -7,6 +7,7 @@ package sonoMain.csv;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import sonoMain.GerenciadorEventos;
 
 /**
  *
@@ -15,24 +16,34 @@ import java.io.IOException;
  */
 public class GenerateCsv {
 public GenerateCsv(){}
-    // Simulando o a classe eventos que ainda nao foi desenvolvida
-    private final String testeCsv = "Horas,Minutos,Tipo\n"
-            + "1,20,Ronco\n"
-            + "3,30,Ronco \n"
-            + "4,21,Barulho\n"
-            + "5,30,Ronco";
+ 
 /***
  * Criacao do csv
  * 
      * futuros parametros: vetor de eventos( hora, minutos e tipo)
      * @param sFileName: Nome do arquivo a ser criado
+     * @param gerEventos: Gerenciador de eventos finalizado e pronto para gerar o csv
      * 
  */
-    public void CreateCsv(String sFileName,String data) {
+    // Modificado para receber um vetor de eventos
+    public void CreateCsv(String sFileName,GerenciadorEventos gerEventos) {
         try {
             // Criar arquivo csv usando dados de um vetor que sera recebido 
             FileWriter writer = new FileWriter(sFileName);
-            writer.append(data);
+            // Gerando os nomes dos campos
+            String campos = "Hora,Minuto,Segundo,Tipo\n";
+            writer.append(campos);
+            for(int i =0; i<gerEventos.getEventosRegistrados().size(); i++){
+            writer.append((char) gerEventos.getEventosRegistrados().get(i).horaRegistro.getHour());
+            writer.append(",");
+            writer.append((char)gerEventos.getEventosRegistrados().get(i).horaRegistro.getMinute());
+            writer.append(",");
+            writer.append((char)gerEventos.getEventosRegistrados().get(i).horaRegistro.getSecond());
+            writer.append(",");
+            writer.append(gerEventos.getEventosRegistrados().get(i).tipo);
+            writer.append("\n");
+            }
+            writer.append(";");
             writer.flush();
 	    writer.close();
 

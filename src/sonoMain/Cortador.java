@@ -15,71 +15,72 @@ import java.util.Arrays;
  */
 public class Cortador {
 
-public static final float TRESHOLD=3;
-public static final float TEMPO_JANELA=0.25f; // 8192*0,25 dá 2048, que é o número de amostras por janela
-private GerenciadorEventos gerenciador;
-    
-public  Cortador(GerenciadorEventos gE){
-    gerenciador= gE;
-}
+    public static final float TRESHOLD = 3;
+    public static final float TEMPO_JANELA = 0.25f; // 8192*0,25 dá 2048, que é o número de amostras por janela
+    private GerenciadorEventos gerenciador;
 
- 
+    public Cortador(GerenciadorEventos gE) {
+        gerenciador = gE;
+    }
+
     /**
      * Método chamado cada vez que o cortador separar um evento de áudio de 3s
+     *
      * @param horaCalculada
      * @param sinalEvento
-     * @param tipoEvento 
+     * @param tipoEvento
      */
-    public void registrarEvento(LocalDateTime horaCalculada, float[] sinalEvento,String tipoEvento){
-        Evento e = new Evento(horaCalculada,sinalEvento,tipoEvento);
+    public void registrarEvento(LocalDateTime horaCalculada, float[] sinalEvento, String tipoEvento) {
+        Evento e = new Evento(horaCalculada, sinalEvento, tipoEvento);
         gerenciador.adicionarEvento(e);
     }
-    
+
     /**
-     * Método chamado pela Classe AudioDataListener (dentro do Realtime) a cada vez que a gravação atinge 10s
+     * Método chamado pela Classe AudioDataListener (dentro do Realtime) a cada
+     * vez que a gravação atinge 10s
+     *
      * @param sinalOriginal
      * @param rmsSinal
      * @param freqAmostragem
-     * @param horaInicio 
+     * @param horaInicio
      */
-    public  void cortarAudio(float[] sinalOriginal,float rmsSinal,int freqAmostragem,LocalDateTime horaInicio) {
+    public void cortarAudio(float[] sinalOriginal, float rmsSinal, int freqAmostragem, LocalDateTime horaInicio) {
 
-            System.out.println("CHAMOU CORTADOR\nrms="+rmsSinal+"\nfreqAmostragem="+freqAmostragem+"\nhorainicio="+horaInicio+
-                    "\nvetor:\n"+Arrays.toString(sinalOriginal));
-            
-            // EXEMPLO DE TESTE:
-            float sinalCortado[]= new float[1024];
-            System.arraycopy(sinalOriginal, 0, sinalCortado, 0, 1024);
-            registrarEvento(horaInicio.plusSeconds(10),sinalCortado,"Exemplo");
-        
-        int amostrasJanela=(int) (Cortador.TEMPO_JANELA*freqAmostragem);
-        System.out.println("\n amostrasJanela: "+amostrasJanela);
-        ArrayList<Integer> indicesJanelas= new ArrayList();
-        int contJanelas=0;
-        int sinalLen=sinalOriginal.length;
-        
-        for(int i=0;i<sinalLen;i=i+amostrasJanela){
+        System.out.println("CHAMOU CORTADOR\nrms=" + rmsSinal + "\nfreqAmostragem=" + freqAmostragem + "\nhorainicio=" + horaInicio
+                + "\nvetor:\n" + Arrays.toString(sinalOriginal));
+
+        // EXEMPLO DE TESTE:
+        float sinalCortado[] = new float[1024];
+        System.arraycopy(sinalOriginal, 0, sinalCortado, 0, 1024);
+        registrarEvento(horaInicio.plusSeconds(10), sinalCortado, "Exemplo");
+
+        int amostrasJanela = (int) (Cortador.TEMPO_JANELA * freqAmostragem);
+        System.out.println("\n amostrasJanela: " + amostrasJanela);
+        ArrayList<Integer> indicesJanelas = new ArrayList();
+        int contJanelas = 0;
+        int sinalLen = sinalOriginal.length;
+
+        for (int i = 0; i < sinalLen; i = i + amostrasJanela) {
             //verifica se o passo vai estourar o vetor
-            int indiceTempInicio=i,indiceTempFim;
-            if(i+amostrasJanela>sinalLen){
-                indiceTempFim=sinalLen;
-            }
-            else{
-                indiceTempFim=i+amostrasJanela;
+            int indiceTempInicio = i, indiceTempFim;
+            if (i + amostrasJanela > sinalLen) {
+                indiceTempFim = sinalLen;
+            } else {
+                indiceTempFim = i + amostrasJanela;
             }
             //pega o valor máximo da janela
-            float tempMax=0;
-            for(int j=indiceTempInicio;j<indiceTempFim;j++){
-                if(sinalOriginal[j]>tempMax){
-                    tempMax=sinalOriginal[j];
+            float tempMax = 0;
+            for (int j = indiceTempInicio; j < indiceTempFim; j++) {
+                if (sinalOriginal[j] > tempMax) {
+                    tempMax = sinalOriginal[j];
                 }
             }
             //compara com o treshold
-            if(tempMax>Cortador.TRESHOLD*rmsSinal){
+            if (tempMax > Cortador.TRESHOLD * rmsSinal) {
                 //guarda o indice da janela
                 indicesJanelas.add(i);
                 //pega 3 apenas sinais que tenham pelo menos 3 janelas de duração
-                if(i-indicesJanelas.get(contJanelas).intValue()<0.75f*freqAmostragem){
+                if (i - indicesJanelas.get(contJanelas).intValue() < 0.75f * freqAmostragem) {
                     //concatena as janelas
                     indicesJanelas.add(i);
                 }
@@ -90,8 +91,7 @@ public  Cortador(GerenciadorEventos gE){
 
             }
         }
-        
-        
+
 //        int contJanela=1,y2=0, i, j, aux, aux2, tam = sinalOriginal.length;
 //        int theshold = 3;
 //        float TempoJanela = (float) 0.2, max = 0;
