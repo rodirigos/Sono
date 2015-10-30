@@ -7,7 +7,9 @@ package sonoMain;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import sonoMain.Serial.SerialRead;
 import sonoMain.csv.GenerateCsv;
+
 
 /**
  *
@@ -17,6 +19,8 @@ public class GerenciadorEventos {
     
     private ArrayList<Evento> eventosRegistrados;
     private GenerateCsv csvGenerate = new GenerateCsv("Eventos.csv");
+   
+    
    
     public GerenciadorEventos(){
         eventosRegistrados= new ArrayList();
@@ -28,11 +32,14 @@ public class GerenciadorEventos {
      * futuros parametros: Serial com a temperatura e humidade de cada evento
      */ 
     public void adicionarEvento(Evento e){
+        // Setando de maneira perigosa a temperatura e a umidade
+        e.temperatura = SerialRead.temperatura;
+        e.umidade = SerialRead.umidade;
         eventosRegistrados.add(e);
         System.out.println("\nCLASSE GERENCIADOR :\n\tAdiconou evento em: "+e.horaRegistro.toString()+
                 "\n tipo: "+e.tipo+"\n audio: "+Arrays.toString(e.audioData));
         //chama a classe contas apra avaliar o evento
-        
+       
         //chama a classe CSV para guardar o evento
         csvGenerate.CreateCsv(eventosRegistrados);
     }

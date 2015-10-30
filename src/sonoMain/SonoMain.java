@@ -5,7 +5,6 @@
  */
 package sonoMain;
 
-import sonoMain.csv.GenerateCsv;
 import sonoMain.realtime.RealTime;
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -14,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.util.Scanner;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import sonoMain.Serial.SerialRead;
 
 /**
  *
@@ -23,6 +23,7 @@ public class SonoMain extends JFrame{
     
     private RealTime audiotest;
     private Scanner inputKey = new Scanner(System.in);
+    public SerialRead serRead = new SerialRead();
     
     //GUI
     JButton capture,stop,play;

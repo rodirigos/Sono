@@ -60,7 +60,7 @@ public class GenerateCsv {
                 writer.append(gerEventos.get(i).tipo);
                 writer.append("\n");
             }
-            writer.append(";");
+        
             writer.flush();
 
         } catch (IOException e) {

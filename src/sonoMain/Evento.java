@@ -18,6 +18,8 @@ public class Evento {
     public LocalDateTime horaRegistro;
     public float[] audioData;
     public String tipo;
+    public float temperatura;
+    public float umidade;
     
     public Evento(LocalDateTime hora, float[] audio,String t){
         horaRegistro=hora;

@@ -14,11 +14,13 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.Enumeration;
 
-public class SerialTest implements SerialPortEventListener {
+public class SerialRead implements SerialPortEventListener {
 
     SerialPort serialPort;
     public static float umidade;
     public static float temperatura;
+    public static boolean estado;//verifica se irá ligar ou não o programa
+    public static boolean estadoThread;
 
     /**
      * The port we're normally going to use.
@@ -32,15 +34,20 @@ public class SerialTest implements SerialPortEventListener {
     private static final int TIME_OUT = 2000;
     private static final int DATA_RATE = 9600;
 
-    public SerialTest() {
+    /**
+     * *
+     * Construtor inicia os valores lidas pelo serial
+     */
+    public SerialRead() {
         this.umidade = (float) 0.0;
         this.temperatura = (float) 0.0;
+        this.estado = false;
+        this.estadoThread = true;
     }
 
     public void initialize() {
         CommPortIdentifier portId = null;
         Enumeration portEnum = CommPortIdentifier.getPortIdentifiers();
-
         //First, Find an instance of serial port as set in PORT_NAMES.
         while (portEnum.hasMoreElements()) {
             CommPortIdentifier currPortId = (CommPortIdentifier) portEnum.nextElement();
@@ -89,36 +96,38 @@ public class SerialTest implements SerialPortEventListener {
                 String inputLine = null;
                 if (input.ready()) {
                     inputLine = input.readLine().trim();
-                    vetor = inputLine.split("%");
-                    umidade=Float.parseFloat(vetor[0]);
-                    temperatura=Float.parseFloat(vetor[1]);
-                }
+                    if (input.ready()) {
+                        inputLine = input.readLine().trim();
+                        //iniciar o programa
+                        if (inputLine.equals("iniciar")) {
+                            estado = true;
+                        } else if (inputLine.equals("desligar")) {
+                            estado = false;
+                        } else {
+                            vetor = inputLine.split("%");
+                            umidade = Float.parseFloat(vetor[0]);
+                            temperatura = Float.parseFloat(vetor[1]);
+                        }
+                    }
 
+                }
             } catch (Exception e) {
                 System.err.println(e.toString());
             }
         }
         // Ignore all the other eventTypes, but you should consider the other ones.
     }
-
- 
-    public static void main(String[] args) throws Exception {
-        SerialTest main = new SerialTest();
+    public static void serialStart() throws Exception {
+        SerialRead main = new SerialRead();
         main.initialize();
         Thread t = new Thread() {
-            public void run() {
-                //the following line will keep this app alive for 1000    seconds,
-                //waiting for events to occur and responding to them    (printing incoming messages to console).
-                try {
-                    Thread.sleep(1000000);
-                } catch (InterruptedException ie) {
-                }
+        
+        @Override
+        public void run() {
+                while(estadoThread = true)
+                {}
             }
         };
         t.start();
-        
-        //for(;;){
-           // System.out.println("temp"+temperatura+" umidade"+umidade);
-        //}
     }
 }
