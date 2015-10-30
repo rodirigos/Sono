@@ -49,11 +49,6 @@ public class Cortador {
         System.out.println("CHAMOU CORTADOR\nrms=" + rmsSinal + "\nfreqAmostragem=" + freqAmostragem + "\nhorainicio=" + horaInicio
                 + "\nvetor:\n" + Arrays.toString(sinalOriginal));
 
-        // EXEMPLO DE TESTE:
-        float sinalCortado[] = new float[1024];
-        System.arraycopy(sinalOriginal, 0, sinalCortado, 0, 1024);
-        registrarEvento(horaInicio.plusSeconds(10), sinalCortado, "Exemplo");
-
         int amostrasJanela = (int) (Cortador.TEMPO_JANELA * freqAmostragem);
         System.out.println("\n amostrasJanela: " + amostrasJanela);
         ArrayList<Integer> indicesJanelas = new ArrayList();
@@ -77,55 +72,57 @@ public class Cortador {
             }
             //compara com o treshold
             if (tempMax > Cortador.TRESHOLD * rmsSinal) {
+                
                 //guarda o indice da janela
                 indicesJanelas.add(i);
-                //pega 3 apenas sinais que tenham pelo menos 3 janelas de duração
+                int indicesLen=indicesJanelas.size()-1;
+                //verifica se a distancia entre duas janelas é maior que 0.75
                 if (i - indicesJanelas.get(contJanelas).intValue() < 0.75f * freqAmostragem) {
                     //concatena as janelas
                     indicesJanelas.add(i);
                 }
-//                else{
-//                    if(indicesJanelas.get(indicesJanelas.size()-1).intValue()+){
-//                        
-//                    }
-
+                //verifica se o audio tem mais de 0.75 segundos de duração
+                if(indicesJanelas.get(indicesLen).intValue()+amostrasJanela-indicesJanelas.get(0).intValue()>=0.75*freqAmostragem){
+                    int indiceCorteInicio=indicesJanelas.get(0).intValue();
+                    int indiceCorteFim=indicesJanelas.get(indicesLen).intValue()+amostrasJanela;
+                    //pega somente sinais com menos de 3s
+                    int corteLen=indiceCorteFim-indiceCorteInicio;
+                    if(corteLen<=3*freqAmostragem){
+                        System.out.println("\n indicesjanelas: \n "+Arrays.toString(indicesJanelas.toArray()));
+                        int indiceCentral=(indiceCorteFim-indiceCorteInicio)/2 +indiceCorteInicio;
+                        System.out.println("\n indiceCentral= "+indiceCentral);
+                        //verifica se nao vai ficar antes do começo do vetor
+                        if(indiceCentral-1.5f*freqAmostragem>0){
+                            indiceCorteInicio=(int) (indiceCentral-1.5f*freqAmostragem);
+                        }
+                        else{
+                            indiceCorteInicio=0;
+                        }
+                        //verifica se vai passar do tamamanho do vetor
+                        if(indiceCentral+1.5f*freqAmostragem<sinalLen){
+                            indiceCorteFim=(int) (indiceCentral+1.5f*freqAmostragem);
+                        }
+                        else{
+                            indiceCorteFim=sinalLen;
+                        }
+                        corteLen=indiceCorteFim-indiceCorteInicio;
+                        System.out.println("\n corteLen: "+corteLen);
+                        //copia o pedaço do sinal desejado
+                        float sinalCortado[] = new float[corteLen];
+                        System.arraycopy(sinalOriginal, indiceCorteInicio, sinalCortado, 0, corteLen);
+                        System.out.println("\n segundos depois do inicio: "+corteLen/freqAmostragem);
+                        LocalDateTime horaEvento= horaInicio.plusSeconds(corteLen/freqAmostragem);
+                        registrarEvento(horaEvento, sinalCortado, "Possível Ronco");
+                    }
+                    else{//sinais maiores que 3s ...
+                        
+                    }
+                }
+                indicesJanelas.clear();
+                indicesJanelas.add(i);
+                contJanelas=0;
             }
         }
-
-//        int contJanela=1,y2=0, i, j, aux, aux2, tam = sinalOriginal.length;
-//        int theshold = 3;
-//        float TempoJanela = (float) 0.2, max = 0;
-//        int AmostraJanela = (int) (TempoJanela * FreqAmostragem);
-//        
-//        
-//        for (i = 0; i < AmostraJanela; i++) {
-//            max=0;
-//            if (i + AmostraJanela > tam) {
-//                aux = i;
-//                temp = new float[tam - i];
-//                for (j = 0; j < tam - i; j++) {
-//                    temp[j] = sinalOriginal[aux];
-//                    aux++;
-//                }
-//            } else {
-//                aux2 = i + AmostraJanela;
-//                temp = new float[aux2];
-//                aux = i;
-//                for (j = 0; j < aux2; j++) {
-//                    temp[j] = sinalOriginal[aux];
-//                }
-//            }
-//            for (j = 0; j < temp.length; j++) {
-//                if (max < temp[j]) {
-//                    max = temp[j];
-//                }
-//            }
-//            if(max>theshold*rms_sinal_original){
-//                if(y2==0){
-//                    y2=i;
-//                }
-//            }
-//        }
     }
 
 }

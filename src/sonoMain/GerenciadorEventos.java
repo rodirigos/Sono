@@ -36,5 +36,24 @@ public class GerenciadorEventos {
         //chama a classe contas apra avaliar o evento
         //chama a classe CSV para guardar o evento
     }
+    /**
+     * Mostra todos os eventos do sistema
+     */
+    public void printEventos(){
+        for(int i=0;i<eventosRegistrados.size();i++){
+            System.out.println("\n["+i+"] Hora= "+eventosRegistrados.get(i).horaRegistro+
+                    "\n tipo= "+eventosRegistrados.get(i).tipo);
+        }
+    }
+    
+    /**
+     * Mostra os dados de um evento específico
+     * @param index indice desejado
+     */
+    public void printAudioEvento(int index){
+        for(int i=0;i<eventosRegistrados.get(index).audioData.length;i++){
+            System.out.println("\n["+i+"]= "+eventosRegistrados.get(index).audioData[i]);
+        }
+    }
     
 }

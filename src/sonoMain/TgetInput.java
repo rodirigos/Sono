@@ -15,12 +15,14 @@ import java.util.Scanner;
 public class TgetInput extends Thread {
     
 
-    RealTime realtime;
+    private RealTime realtime;
+    private GerenciadorEventos gerenciador;
     private Scanner in = new Scanner(System.in);
     private boolean stop=false;
     
-    TgetInput(RealTime r){
+    TgetInput(RealTime r,GerenciadorEventos g){
         realtime=r;
+        gerenciador=g;
         this.start();
     }
     
@@ -37,6 +39,8 @@ public class TgetInput extends Thread {
         System.out.println("\n --------SONO-------\n ");
         System.out.println("\n COMANDOS VÁLIDOS: \n start-- começa a capturar o audio"
                         + "\n stop-- para de capturar "+
+                          "\n events-- lista todos os eventos do sistema por data"+
+                          "\n show INDEX-- mostra os dados de um evento"+
                           "\n exit-- sai do programa");
         while(stop!=true){
             String input=in.nextLine();
@@ -47,6 +51,12 @@ public class TgetInput extends Thread {
                      realtime.stopRecord();
                      realtime.getData();
             }
+            else if(input.equals("events")==true){
+                    gerenciador.printEventos();
+            }
+            else if(input.contains("show")==true){
+                //depois eu faço isso, nem sei se precisa =p
+            }
             else if(input.equals("exit")==true){
                 realtime.quitprogram();
                 Runtime.getRuntime().exit(0);
@@ -54,6 +64,8 @@ public class TgetInput extends Thread {
             else{
                 System.out.println("\n COMANDOS VÁLIDOS: \n start-- começa a capturar o audio"
                         + "\n stop-- para de capturar "+
+                          "\n events-- lista todos os eventos do sistema por data"+
+                          "\n show INDEX-- mostra os dados de um evento"+
                           "\n exit-- sai do programa");
             }
         }
