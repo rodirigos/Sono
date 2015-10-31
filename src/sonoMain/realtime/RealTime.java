@@ -54,6 +54,8 @@ public float[] getData(){
       float[] dataArray= dataListener.getAllSamples();
       System.out.println("\nData Len: "+dataArray.length);
       System.out.println("\n Valor RMS: "+dataListener.getRMS());
+      cortador.cortarAudio(dataArray, dataListener.getRMS(),RealTime.SAMPLE_RATE, horaInicio);
+      dataListener.clearData();
 //      for(int i=0;i<dataArray.length;i++){
 //          System.out.println("["+i+"]="+dataArray[i]);
 //      }

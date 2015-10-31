@@ -45,7 +45,7 @@ public class AudioDataListener implements AudioListener {
             System.out.println("\nSAMPLECOUNTER:"+sampleCounter);
             if(sampleCounter>RealTime.MAX_SAMPLES){
                 realTime.cortador.cortarAudio(getAllSamples(), rms,RealTime.SAMPLE_RATE, realTime.horaInicio);
-                sampleCounter=0;
+                clearData();
             }
 //            else{
 //                ////PRINT_DEBUG  

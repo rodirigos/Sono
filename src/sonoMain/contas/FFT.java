@@ -306,9 +306,9 @@ public class FFT extends FourierTransform {
     public static void main(String[] argv) {
 
         //frequencia de amostragem do sinal
-        int freamostragem = 8000;
+        int freamostragem = 8192;
         //tamanho do vetor
-        int tam = 512, i;
+        int tam = 8192, i;
         FFT fft = new FFT(tam, freamostragem);
 
         float increment = (float) (2);
