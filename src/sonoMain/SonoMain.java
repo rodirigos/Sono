@@ -20,11 +20,17 @@ import sonoMain.contas.Contas;
  *
  * @author luisfg30
  */
+
+/***Criando a serial read que le todas os dados enviados pelo serial
+*/
+
+
 public class SonoMain extends JFrame{
-    
+    public static SerialRead sRead = new SerialRead();
     private RealTime audiotest;
     private Scanner inputKey = new Scanner(System.in);
     public SerialRead serRead = new SerialRead();
+    
     
     //GUI
     JButton capture,stop,play;
@@ -84,7 +90,7 @@ public class SonoMain extends JFrame{
     }
     
     public void playAudio(){
-        
+        audiotest.importAudio("AudioSample.wav");
     }
     
         private class ButtonListener implements ActionListener
