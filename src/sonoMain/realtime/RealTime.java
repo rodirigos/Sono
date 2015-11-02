@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Teste.RealTime;
+package sonoMain.realtime;
 
 import ddf.minim.AudioBuffer;
 import ddf.minim.AudioInput;
@@ -13,44 +13,60 @@ import ddf.minim.Minim;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.time.LocalDateTime;
+import sonoMain.Cortador;
 
 /**
  *
  * @author luisfg30
  */
 public class RealTime {
-    
+
+public static final int SAMPLE_RATE=8192;
+public static final int BUFFER_SIZE=1024;
+public static final int BITS_PER_SAMPLE=16;
+public static final int MAX_SAMPLES=80; //8192*10(segundos)/1024 amostras por buffer
+public AudioBuffer audioData;
+public LocalDateTime horaInicio;    
+public Cortador cortador;
+
 Minim minim;
 AudioPlayer player;
 AudioInput input;
-AudioBuffer audioData;
 AudioRecorder recorder;
 AudioDataListener dataListener;
 
 public RealTime(){
     minim = new Minim(this);
-    input= minim.getLineIn(Minim.MONO, 1024, 8192, 16);
-    dataListener = new AudioDataListener();
+    input= minim.getLineIn(Minim.MONO, BUFFER_SIZE, SAMPLE_RATE, BITS_PER_SAMPLE);
+    dataListener = new AudioDataListener(this);
     input.addListener(dataListener);
     audioData=input.mix;
     recorder=minim.createRecorder(input,"AudioSample.wav");
+}
 
+public void setCortadorRef(Cortador c){
+    cortador=c;
 }
 
 public float[] getData(){ 
       
       float[] dataArray= dataListener.getAllSamples();
       System.out.println("\nData Len: "+dataArray.length);
-      for(int i=0;i<dataArray.length;i++){
-          System.out.println("["+i+"]="+dataArray[i]);
-      }
+      System.out.println("\n Valor RMS: "+dataListener.getRMS());
+      cortador.cortarAudio(dataArray, dataListener.getRMS(),RealTime.SAMPLE_RATE, horaInicio);
+      dataListener.clearData();
+//      for(int i=0;i<dataArray.length;i++){
+//          System.out.println("["+i+"]="+dataArray[i]);
+//      }
       return dataArray;
 }
 
 public void startRecord(){
-    input.enableMonitoring();
+    input.enableMonitoring();//permite ouvir o áudio , questão de debug
     recorder.beginRecord();
     dataListener.saveData=true;
+    horaInicio = LocalDateTime.now();
 }
 
 public void stopRecord(){

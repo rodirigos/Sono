@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Teste.Contas;
+package sonoMain.contas;
 
 import java.awt.Color; 
 import java.lang.reflect.Array;
@@ -215,8 +215,7 @@ public class FFT extends FourierTransform {
         int aux = sampleRate * timeSize;
         int IndicesFreq[] = {Math.abs(100 / aux) + 1, Math.abs(150 / aux) + 1, Math.abs(250 / aux) + 1, Math.abs(350 / aux) + 1, Math.abs(500 / aux) + 1, Math.abs(1000 / aux) + 1, Math.abs(1500 / aux) + 1, Math.abs(2000 / aux) + 1};
         int Freq[] = new int[9];
-        
-        System.out.println("comparacao-> "+Math.floor(100 / aux) + 1);
+
         float EnergiaFreq[] = new float[9];
         float MaxFreq[] = new float[9];
         float energiaFreqRates[] = new float[9];
@@ -231,7 +230,7 @@ public class FFT extends FourierTransform {
             System.out.println(i + " ->" + indexToFreq(i));
         }
 
-     
+        System.out.println("divisao ->" + Math.abs(100 / aux) + 1);
         for (i = 0; i < vetor.length; i++) {
             if (i < Math.abs(4000 / aux) + 1) {
 
@@ -307,9 +306,9 @@ public class FFT extends FourierTransform {
     public static void main(String[] argv) {
 
         //frequencia de amostragem do sinal
-        int freamostragem = 4000;
+        int freamostragem = 8192;
         //tamanho do vetor
-        int tam = 65536, i;
+        int tam = 8192, i;
         FFT fft = new FFT(tam, freamostragem);
 
         float increment = (float) (2);

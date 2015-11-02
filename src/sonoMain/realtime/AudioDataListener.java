@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Teste.RealTime;
+package sonoMain.realtime;
 
 import ddf.minim.AudioListener;
 import java.util.ArrayList;
 import java.util.Arrays;
+import sonoMain.Cortador;
 
 /**
  *Esta classe implementa uma interface que é chamada pelo buffer do programa
@@ -16,13 +17,17 @@ import java.util.Arrays;
 public class AudioDataListener implements AudioListener {
     
     private ArrayList<float[]> bufferSamples;
+    private float rms;
+    private RealTime realTime;
     public boolean saveData;
     public int sampleCounter,sampleSize;
     
-    public AudioDataListener(){
+    public AudioDataListener(RealTime r){
+        realTime=r;
         bufferSamples= new ArrayList();
         saveData=false;
         sampleCounter=0;
+        rms=0;
     }
     
     /**
@@ -35,9 +40,18 @@ public class AudioDataListener implements AudioListener {
         if(saveData==true){
             bufferSamples.add(samp);
             sampleCounter++;
+            rms+=realTime.audioData.level();
             sampleSize=samp.length;
-            System.out.println("\n adicionou "+sampleSize+" no vetor\nvetor tem "+bufferSamples.size()+"samples");
-            System.out.println("samples: "+Arrays.toString(samp));
+            System.out.println("\nSAMPLECOUNTER:"+sampleCounter);
+            if(sampleCounter>RealTime.MAX_SAMPLES){
+                realTime.cortador.cortarAudio(getAllSamples(), rms,RealTime.SAMPLE_RATE, realTime.horaInicio);
+                clearData();
+            }
+//            else{
+//                ////PRINT_DEBUG  
+//                System.out.println("\n adicionou "+sampleSize+" no vetor\nvetor tem "+bufferSamples.size()+"samples");
+//                System.out.println("samples: "+Arrays.toString(samp));
+//            }
         }
     }
 
@@ -49,6 +63,7 @@ public class AudioDataListener implements AudioListener {
     public float[] getAllSamples(){
         float[] allSamples= new float[sampleSize*bufferSamples.size()];
         int copyCounter=0;
+        rms=rms/sampleCounter;
         for(int i=0;i<bufferSamples.size();i++){
             System.arraycopy(bufferSamples.get(i), 0, allSamples,copyCounter, bufferSamples.get(i).length);
             copyCounter+=bufferSamples.get(i).length;
@@ -56,9 +71,12 @@ public class AudioDataListener implements AudioListener {
         return allSamples;
     }
     
+    public float getRMS(){return rms;}
+    
     public void clearData(){
         bufferSamples.clear();
         sampleCounter=0;
+        rms=0;
     }
     
 }

@@ -1,4 +1,4 @@
-package Teste.Contas;
+package sonoMain.contas;
 
 import java.awt.Color;
 import java.awt.Dimension;
