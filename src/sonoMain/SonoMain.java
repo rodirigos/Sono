@@ -14,6 +14,7 @@ import java.util.Scanner;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import sonoMain.Serial.SerialRead;
+import sonoMain.contas.Contas;
 
 /**
  *
@@ -31,13 +32,15 @@ public class SonoMain extends JFrame{
     public static void main(String args[]){
         //inicia as partes do sistema
         GerenciadorEventos gerenciador= new GerenciadorEventos();
-        Cortador cortador= new Cortador(gerenciador);
+        Contas contas= new Contas();
+        Cortador cortador= new Cortador(gerenciador,contas);
             
         JFrame frame = new SonoMain(cortador,gerenciador);
         frame.pack();
         frame.setVisible(true);
       
     }
+    
     
     public SonoMain(Cortador cortador,GerenciadorEventos gerenciador){
         super("Capture Sound Demo");
@@ -102,5 +105,4 @@ public class SonoMain extends JFrame{
                  }
              }
         }
-    
-}
+    }
