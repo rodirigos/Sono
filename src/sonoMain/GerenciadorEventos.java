@@ -66,7 +66,7 @@ public class GerenciadorEventos {
     }
     
     /**
-     * Mostra os dados de um evento específico
+     * Mostra os dados de um evento especï¿½fico
      * @param index indice desejado
      */
     public void printAudioEvento(int index){
