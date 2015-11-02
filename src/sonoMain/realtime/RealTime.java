@@ -7,9 +7,12 @@ package sonoMain.realtime;
 
 import ddf.minim.AudioBuffer;
 import ddf.minim.AudioInput;
+import ddf.minim.AudioOutput;
 import ddf.minim.AudioPlayer;
 import ddf.minim.AudioRecorder;
+import ddf.minim.AudioSample;
 import ddf.minim.Minim;
+import ddf.minim.ugens.FilePlayer;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -120,13 +123,15 @@ public class RealTime {
      */
     public float[] importAudio(String fileName) {
        
-        float[] dArray;
-        AudioPlayer audioP = minim.loadFile(fileName);
-        //audioData = audioP.mix;
-        input = minim.getLineIn();
-        dataListener = new AudioDataListener(this);
-        audioP.addListener(dataListener);
-        dArray = dataListener.getAllSamples();
+        float[] dArray=null;
+       // FilePlayer filePlayer = new FilePlayer(minim.loadFileStream(fileName));
+        AudioSample sound = minim.loadSample(fileName);
+        dArray = sound.getChannel(AudioSample.LEFT);
+        for(int i =0 ; i< dArray.length; i++){
+        System.out.println( dArray[i]+"\n");
+        }
+      sound.close();
+        
          
         return dArray;
     }
