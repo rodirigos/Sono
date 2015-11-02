@@ -18,6 +18,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import sonoMain.Cortador;
 
 /**
@@ -123,10 +124,12 @@ public class RealTime {
      */
     public float[] importAudio(String fileName) {
        
-        float[] dArray=null;
+        float[] dArray;
        // FilePlayer filePlayer = new FilePlayer(minim.loadFileStream(fileName));
         AudioSample sound = minim.loadSample(fileName);
-        dArray = sound.getChannel(AudioSample.LEFT);
+        System.out.println("/n sound buffer "+sound.left.toString());
+        dArray = sound.getChannel(sound.LEFT);
+        System.out.println("dArray size  "+dArray.length);
         for(int i =0 ; i< dArray.length; i++){
         System.out.println( dArray[i]+"\n");
         }
