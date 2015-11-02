@@ -19,6 +19,7 @@ public class SerialTest implements SerialPortEventListener {
     SerialPort serialPort;
     public static float umidade;
     public static float temperatura;
+    public static boolean estado;//verifica se irá ligar ou não o programa
 
     /**
      * The port we're normally going to use.
@@ -35,6 +36,7 @@ public class SerialTest implements SerialPortEventListener {
     public SerialTest() {
         this.umidade = (float) 0.0;
         this.temperatura = (float) 0.0;
+        this.estado = false;
     }
 
     public void initialize() {
@@ -89,9 +91,20 @@ public class SerialTest implements SerialPortEventListener {
                 String inputLine = null;
                 if (input.ready()) {
                     inputLine = input.readLine().trim();
-                    vetor = inputLine.split("%");
-                    umidade=Float.parseFloat(vetor[0]);
-                    temperatura=Float.parseFloat(vetor[1]);
+                    if (input.ready()) {
+                        inputLine = input.readLine().trim();
+                        //iniciar o programa
+                        if (inputLine.equals("iniciar")) {
+                            estado = true;
+                        } else if (inputLine.equals("desligar")) {
+                            estado = false;
+                        } else {
+                            vetor = inputLine.split("%");
+                            umidade = Float.parseFloat(vetor[0]);
+                            temperatura = Float.parseFloat(vetor[1]);
+                        }
+                    }
+
                 }
 
             } catch (Exception e) {
@@ -101,7 +114,6 @@ public class SerialTest implements SerialPortEventListener {
         // Ignore all the other eventTypes, but you should consider the other ones.
     }
 
- 
     public static void main(String[] args) throws Exception {
         SerialTest main = new SerialTest();
         main.initialize();
@@ -116,9 +128,9 @@ public class SerialTest implements SerialPortEventListener {
             }
         };
         t.start();
-        
+
         //for(;;){
-           // System.out.println("temp"+temperatura+" umidade"+umidade);
+        // System.out.println("temp"+temperatura+" umidade"+umidade);
         //}
     }
 }
