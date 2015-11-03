@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import javax.sound.sampled.AudioFormat;
 import sonoMain.Cortador;
 
 /**
@@ -87,7 +88,7 @@ public class RealTime {
      */
     public void quitprogram() {
         input.close();
-        player.close();
+        //player.close();
         minim.stop();
     }
 
@@ -133,6 +134,17 @@ public class RealTime {
         for(int i =0 ; i< dArray.length; i++){
         System.out.println( dArray[i]+"\n");
         }
+        //já manda os dados para o cortador 
+        horaInicio=LocalDateTime.now();
+        AudioFormat af=sound.getFormat();
+        float rms=0;
+        for(int i=0;i<dArray.length;i++){
+            if(i!=0){
+                rms+=Math.pow(dArray[i], 2)/i;
+            }
+        }
+        rms=(float) Math.sqrt(rms);
+        cortador.cortarAudio(dArray, rms, (int) af.getSampleRate(), horaInicio);
       sound.close();
         
          

@@ -37,11 +37,13 @@ public class TgetInput extends Thread {
     public void run(){
         
         System.out.println("\n --------SONO-------\n ");
-        System.out.println("\n COMANDOS VÁLIDOS: \n start-- começa a capturar o audio"
-                        + "\n stop-- para de capturar "+
-                          "\n events-- lista todos os eventos do sistema por data"+
-                          "\n show INDEX-- mostra os dados de um evento"+
-                          "\n exit-- sai do programa");
+        System.out.println("\n COMANDOS VÁLIDOS: "
+                       + "\n start-- começa a capturar o audio"+
+                         "\n stop-- para de capturar "+
+                         "\n import-- importa o áudio em AudioSample "+
+                         "\n events-- lista todos os eventos do sistema por data"+
+                         "\n show INDEX-- mostra os dados de um evento"+
+                         "\n exit-- sai do programa");
         while(stop!=true){
             String input=in.nextLine();
             if(input.equals("start")==true){
@@ -50,6 +52,9 @@ public class TgetInput extends Thread {
             else if(input.equals("stop")==true){
                      realtime.stopRecord();
                      realtime.getData();
+            }
+            else if(input.equals("import")==true){
+                realtime.importAudio("AudioSample.wav");
             }
             else if(input.equals("events")==true){
                     gerenciador.printEventos();
@@ -64,6 +69,7 @@ public class TgetInput extends Thread {
             else{
                 System.out.println("\n COMANDOS VÁLIDOS: \n start-- começa a capturar o audio"
                         + "\n stop-- para de capturar "+
+                          "\n import-- importa o áudio em AudioSample "+
                           "\n events-- lista todos os eventos do sistema por data"+
                           "\n show INDEX-- mostra os dados de um evento"+
                           "\n exit-- sai do programa");
