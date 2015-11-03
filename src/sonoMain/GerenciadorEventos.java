@@ -33,8 +33,8 @@ public class GerenciadorEventos {
      */ 
     public void adicionarEvento(Evento e){
         // Setando de maneira perigosa a temperatura e a umidade
-        e.temperatura = SerialRead.temperatura;
-        e.umidade = SerialRead.umidade;
+        //e.temperatura = SerialRead.temperatura;
+        //e.umidade = SerialRead.umidade;
         eventosRegistrados.add(e);
         System.out.println("\nCLASSE GERENCIADOR :\n\tAdiconou evento em: "+e.horaRegistro.toString()+
                 "\n tipo: "+e.tipo+"\n audio: "+Arrays.toString(e.audioData));
@@ -66,7 +66,7 @@ public class GerenciadorEventos {
     }
     
     /**
-     * Mostra os dados de um evento específico
+     * Mostra os dados de um evento especï¿½fico
      * @param index indice desejado
      */
     public void printAudioEvento(int index){

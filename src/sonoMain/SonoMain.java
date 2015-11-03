@@ -14,16 +14,23 @@ import java.util.Scanner;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import sonoMain.Serial.SerialRead;
+import sonoMain.contas.Contas;
 
 /**
  *
  * @author luisfg30
  */
+
+/***Criando a serial read que le todas os dados enviados pelo serial
+*/
+
+
 public class SonoMain extends JFrame{
-    
+    public static SerialRead sRead = new SerialRead();
     private RealTime audiotest;
     private Scanner inputKey = new Scanner(System.in);
     public SerialRead serRead = new SerialRead();
+    
     
     //GUI
     JButton capture,stop,play;
@@ -31,13 +38,15 @@ public class SonoMain extends JFrame{
     public static void main(String args[]){
         //inicia as partes do sistema
         GerenciadorEventos gerenciador= new GerenciadorEventos();
-        Cortador cortador= new Cortador(gerenciador);
+        Contas contas= new Contas();
+        Cortador cortador= new Cortador(gerenciador,contas);
             
         JFrame frame = new SonoMain(cortador,gerenciador);
         frame.pack();
         frame.setVisible(true);
       
     }
+    
     
     public SonoMain(Cortador cortador,GerenciadorEventos gerenciador){
         super("Capture Sound Demo");
@@ -81,7 +90,7 @@ public class SonoMain extends JFrame{
     }
     
     public void playAudio(){
-        
+        audiotest.importAudio("AudioSample.wav");
     }
     
         private class ButtonListener implements ActionListener
@@ -102,5 +111,4 @@ public class SonoMain extends JFrame{
                  }
              }
         }
-    
-}
+    }

@@ -8,6 +8,7 @@ package sonoMain;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import sonoMain.contas.Contas;
 
 /**
  *
@@ -18,9 +19,11 @@ public class Cortador {
     public static final float TRESHOLD = 3;
     public static final float TEMPO_JANELA = 0.25f; // 8192*0,25 dá 2048, que é o número de amostras por janela
     private GerenciadorEventos gerenciador;
+    private Contas contas;
 
-    public Cortador(GerenciadorEventos gE) {
+    public Cortador(GerenciadorEventos gE,Contas c) {
         gerenciador = gE;
+        contas=c;
     }
 
     /**
@@ -48,7 +51,13 @@ public class Cortador {
 
         System.out.println("CHAMOU CORTADOR\nrms=" + rmsSinal + "\nfreqAmostragem=" + freqAmostragem + "\nhorainicio=" + horaInicio
                 + "\nvetor:\n" + Arrays.toString(sinalOriginal));
-
+        
+        
+        //teste das contas
+        float [] sinalContas= new float[1024];
+        System.arraycopy(sinalOriginal, 0, sinalContas, 0, 1024);
+        contas.calcFaixas(sinalContas, freqAmostragem);
+        
         int amostrasJanela = (int) (Cortador.TEMPO_JANELA * freqAmostragem);
         System.out.println("\n amostrasJanela: " + amostrasJanela);
         ArrayList<Integer> indicesJanelas = new ArrayList();
