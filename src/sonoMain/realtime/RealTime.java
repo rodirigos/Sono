@@ -131,9 +131,9 @@ public class RealTime {
         dArray = sound.getChannel(sound.LEFT);
         System.out.println("dArray size  "+dArray.length);
         for(int i =0 ; i< dArray.length; i++){
-        System.out.println( dArray[i]+"\n");
+        System.out.println( dArray[i]+"\n"+ i + "\n");
         }
-      sound.close();
+        sound.close();
         
          
         return dArray;

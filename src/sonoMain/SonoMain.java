@@ -39,8 +39,7 @@ public class SonoMain extends JFrame{
         //inicia as partes do sistema
         GerenciadorEventos gerenciador= new GerenciadorEventos();
         Contas contas= new Contas();
-        Cortador cortador= new Cortador(gerenciador,contas);
-            
+        Cortador cortador= new Cortador(gerenciador,contas);       
         JFrame frame = new SonoMain(cortador,gerenciador);
         frame.pack();
         frame.setVisible(true);

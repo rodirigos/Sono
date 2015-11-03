@@ -5,10 +5,12 @@
  */
 package sonoMain;
 
+import ddf.minim.Minim;
 import java.util.ArrayList;
 import java.util.Arrays;
 import sonoMain.Serial.SerialRead;
 import sonoMain.csv.GenerateCsv;
+import sonoMain.realtime.RealTime;
 
 
 /**
@@ -33,8 +35,8 @@ public class GerenciadorEventos {
      */ 
     public void adicionarEvento(Evento e){
         // Setando de maneira perigosa a temperatura e a umidade
-        //e.temperatura = SerialRead.temperatura;
-        //e.umidade = SerialRead.umidade;
+        e.temperatura = SerialRead.temperatura;
+        e.umidade = SerialRead.umidade;
         eventosRegistrados.add(e);
         System.out.println("\nCLASSE GERENCIADOR :\n\tAdiconou evento em: "+e.horaRegistro.toString()+
                 "\n tipo: "+e.tipo+"\n audio: "+Arrays.toString(e.audioData));
@@ -73,6 +75,17 @@ public class GerenciadorEventos {
         for(int i=0;i<eventosRegistrados.get(index).audioData.length;i++){
             System.out.println("\n["+i+"]= "+eventosRegistrados.get(index).audioData[i]);
         }
+    }
+    
+    /**
+     *Criando metodo que pegar vetor float e transforma em wav files
+     * 
+     * @param realTime: Referenciando a classe para utilizar seus dados
+     * 
+     */
+    public void floatToWav(RealTime realTime){
+      //  eventosRegistrados
+        
     }
     
 }
