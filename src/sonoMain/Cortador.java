@@ -103,7 +103,7 @@ public class Cortador {
                         System.out.println("\nindiceInicio="+indiceCorteInicio+
                                 " indiceFim= "+indiceCorteFim);
                         //pega somente sinais com menos de 3s
-                        if(corteLen<=3*freqAmostragem){
+                        if(corteLen>=0.6f*freqAmostragem && corteLen<=3*freqAmostragem){
                             System.out.println(" indicesJanelasSelecionadas "+Arrays.toString(indicesJanelas.toArray()));
                             int indiceCentral=(indiceCorteFim-indiceCorteInicio)/2 +indiceCorteInicio;
                             System.out.println("\n indiceCentral= "+indiceCentral);
@@ -136,7 +136,9 @@ public class Cortador {
                             indicesJanelas.add(i);
                         }
                         else{
-                            System.out.println("\n Eevento com mais de 3s");
+                            System.out.println("\n Eevento com menos de 0,6s ou mais de 3s");
+                            indicesJanelas.clear();
+                            indicesJanelas.add(i);
                         }
                     }
                 }    
