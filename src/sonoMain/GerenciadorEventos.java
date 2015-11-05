@@ -7,9 +7,11 @@ package sonoMain;
 
 import Teste.FloatSampleTools;
 import static Teste.FloatSampleTools.float2byte;
+import static Teste.FloatSampleTools.float2byteInterleaved;
 import ddf.minim.AudioRecorder;
 import ddf.minim.AudioSample;
 import ddf.minim.Minim;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -95,37 +97,31 @@ public class GerenciadorEventos {
     }
 
     /**
-     * Criando metodo que pegar vetor float e transforma em wav files
+     * Criando metodo que pegar vetor float e transforma em wav files A criaao
+     * desse parametro funciona apenas por motivo de debug e nao deve ser usada
+     * como o audio natural porque peder qualidade na conversao
      *
      * @param minim: referencia do minim para utilizar biblioteca
      */
     public void floatToWav(RealTime realTime) {
-
         float waveSampleRate = 8192f;
-
-        InputStream inputStream;
+        // Os tres segundos a serem convertidos
+        byte[] floConv = new byte[8192*3];
         System.out.println("Entrei no exportador Vetor = " + eventosRegistrados.size() + "\n");
+        AudioFormat format = new AudioFormat(waveSampleRate, 8, 1, true, true);
+        
+        
         // Criando 
         for (int i = 0; i < eventosRegistrados.size(); i++) {
             try {
-                AudioSample wave;
-                AudioFormat format = new AudioFormat(waveSampleRate, 16, 1, true, true);
-                AudioRecorder recorder;
-// AudioInputStream inputStream = new AudioInputStream(new ByteArrayInputStream(), format, i)
-                FileWriter fileTmp;;
+                float2byteInterleaved(eventosRegistrados.get(i).audioData, 0, floConv, 0, 8192*3, format, 0);
+                ByteArrayInputStream ais = new ByteArrayInputStream(floConv);
+                AudioInputStream inputStream = new AudioInputStream(ais, format, floConv.length);
                 String str = "amostra";
-                wave = realTime.minim.createSample(eventosRegistrados.get(i).audioData, format);
                 str = str.concat(String.valueOf(i));
                 str = str.concat(".wav");
-                fileTmp = new FileWriter(str);
-                inputStream = createInput(str);          
-                recorder = realTime.minim.createRecorder(wave,str, false);
-                wave.trigger();
-                recorder.setRecordSource(wave);
-                recorder.save();
-               
-                //  AudioSystem.write(null, AudioFileFormat.Type.WAVE, fileTmp)
                 System.out.println("A string tem nome de:" + str);
+                AudioSystem.write(inputStream, AudioFileFormat.Type.WAVE, new File(str));
             } catch (IOException ex) {
                 Logger.getLogger(GerenciadorEventos.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -133,10 +129,10 @@ public class GerenciadorEventos {
         }
 
     }
-
+/*
     public InputStream createInput(String fileName) throws FileNotFoundException {
         InputStream inputStream = new FileInputStream(fileName);
         return inputStream;
     }
-
+*/
 }
