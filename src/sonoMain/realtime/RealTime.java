@@ -128,22 +128,19 @@ public class RealTime {
         float[] dArray;
        // FilePlayer filePlayer = new FilePlayer(minim.loadFileStream(fileName));
         AudioSample sound = minim.loadSample(fileName);
-        System.out.println("/n sound buffer "+sound.left.toString());
         dArray = sound.getChannel(sound.LEFT);
         System.out.println("dArray size  "+dArray.length);
-        for(int i =0 ; i< dArray.length; i++){
-        System.out.println( dArray[i]+"\n");
-        }
+//        for(int i =0 ; i< dArray.length; i++){
+//        System.out.println("\n ["+i+"]= "+ dArray[i]);
+//        }
         //já manda os dados para o cortador 
         horaInicio=LocalDateTime.now();
         AudioFormat af=sound.getFormat();
         float rms=0;
         for(int i=0;i<dArray.length;i++){
-            if(i!=0){
-                rms+=Math.pow(dArray[i], 2)/i;
-            }
+                rms+=Math.pow(dArray[i], 2);
         }
-        rms=(float) Math.sqrt(rms);
+        rms=(float) Math.sqrt(rms/dArray.length);
         cortador.cortarAudio(dArray, rms, (int) af.getSampleRate(), horaInicio);
       sound.close();
         
