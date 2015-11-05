@@ -143,6 +143,45 @@ public class Cortador {
                     }
                 }    
             }
+        }//se o evento detectado era o único ou o último
+        int indicesLen=indicesJanelas.size();
+        if(indicesLen>=1){
+            int indiceCorteInicio=indicesJanelas.get(0);
+                        int indiceCorteFim=indicesJanelas.get(indicesJanelas.size()-2)+amostrasJanela;
+                        int corteLen=indiceCorteFim-indiceCorteInicio;
+                        System.out.println("\nindiceInicio="+indiceCorteInicio+
+                                " indiceFim= "+indiceCorteFim);
+                        //pega somente sinais com menos de 3s
+                        if(corteLen>=0.6f*freqAmostragem && corteLen<=3*freqAmostragem){
+                            System.out.println(" indicesJanelasSelecionadas "+Arrays.toString(indicesJanelas.toArray()));
+                            int indiceCentral=(indiceCorteFim-indiceCorteInicio)/2 +indiceCorteInicio;
+                            System.out.println("\n indiceCentral= "+indiceCentral);
+                            //verifica se nao vai ficar antes do começo do vetor
+                            if(indiceCentral-1.5f*freqAmostragem>0){
+                                indiceCorteInicio=(int) (indiceCentral-1.5f*freqAmostragem);
+                            }
+                            else{
+                                indiceCorteInicio=0;
+                            }
+                            //verifica se vai passar do tamamanho do vetor
+                            if(indiceCentral+1.5f*freqAmostragem<sinalLen){
+                                indiceCorteFim=(int) (indiceCentral+1.5f*freqAmostragem);
+                            }
+                            else{
+                                indiceCorteFim=sinalLen;
+                            }
+                            corteLen=indiceCorteFim-indiceCorteInicio;
+                            System.out.println("\n corteLen: "+corteLen+
+                                    "indiceCorteInicio: "+indiceCorteInicio+
+                                    "indiceCorteFim: "+indiceCorteFim);
+                            //copia o pedaço do sinal desejado
+                            float sinalCortado[] = new float[corteLen];
+                            System.arraycopy(sinalOriginal, indiceCorteInicio, sinalCortado, 0, corteLen);
+                            float tempoCorte=indiceCorteInicio/freqAmostragem;
+                            System.out.println("\n segundos depois do inicio: "+tempoCorte);
+                            LocalDateTime horaEvento= horaInicio.plusSeconds((long) tempoCorte);
+                            registrarEvento(horaEvento, sinalCortado, "Possível Ronco");
+                        }
         }
     }
 
