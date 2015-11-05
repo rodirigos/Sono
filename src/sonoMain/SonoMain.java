@@ -58,7 +58,7 @@ public class SonoMain extends JFrame{
         capture.addActionListener(listener);
         stop = new JButton("Stop");
         stop.addActionListener(listener);
-        play = new JButton("Play");
+        play = new JButton("Import");
         play.addActionListener(listener);
 
         capture.setEnabled(true);
@@ -89,7 +89,8 @@ public class SonoMain extends JFrame{
     }
     
     public void playAudio(){
-        audiotest.importAudio("AudioSample.wav");
+       // audiotest.importAudio("AudioSample.wav");
+  
     }
     
         private class ButtonListener implements ActionListener
