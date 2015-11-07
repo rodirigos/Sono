@@ -122,6 +122,7 @@ public class GerenciadorEventos {
                 str = str.concat(".wav");
                 System.out.println("A string tem nome de:" + str);
                 AudioSystem.write(inputStream, AudioFileFormat.Type.WAVE, new File(str));
+                System.out.println("Os audios foram exportados com sucesso");
             } catch (IOException ex) {
                 Logger.getLogger(GerenciadorEventos.class.getName()).log(Level.SEVERE, null, ex);
             }
