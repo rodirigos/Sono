@@ -36,7 +36,7 @@ public class RealTime {
     public LocalDateTime horaInicio;
     public Cortador cortador;
 
-    Minim minim;
+    public Minim minim;
     AudioPlayer player;
     AudioInput input;
     AudioRecorder recorder;

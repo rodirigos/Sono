@@ -62,10 +62,14 @@ public class TgetInput extends Thread {
             else if(input.contains("show")==true){
                 //depois eu faço isso, nem sei se precisa =p
             }
+            else if(input.equals("export")==true){
+                gerenciador.floatToWav(realtime);
+            }
             else if(input.equals("exit")==true){
                 realtime.quitprogram();
                 Runtime.getRuntime().exit(0);
             }
+            
             else{
                 System.out.println("\n COMANDOS VÁLIDOS: \n start-- começa a capturar o audio"
                         + "\n stop-- para de capturar "+
