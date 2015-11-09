@@ -177,7 +177,7 @@ public class Cortador {
                             //copia o pedaço do sinal desejado
                             float sinalCortado[] = new float[corteLen];
                             System.arraycopy(sinalOriginal, indiceCorteInicio, sinalCortado, 0, corteLen);
-                            float tempoCorte=indiceCorteInicio/freqAmostragem;
+                            float tempoCorte=indiceCentral/freqAmostragem;
                             System.out.println("\n segundos depois do inicio: "+tempoCorte);
                             LocalDateTime horaEvento= horaInicio.plusSeconds((long) tempoCorte);
                             registrarEvento(horaEvento, sinalCortado, "Possível Ronco");
