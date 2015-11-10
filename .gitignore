@@ -6,7 +6,7 @@ dist/
 nbdist/
 nbactions.xml
 nb-configuration.xml
-
+nbproject/
 
 # Class Files #
 *.class
@@ -20,3 +20,7 @@ nb-configuration.xml
 /AudioSample.wav
 /nbproject/project.xml
 /nbproject/build-impl.xml
+/Eventos.csv
+/noite.csv
+/build.xml
+/index.html

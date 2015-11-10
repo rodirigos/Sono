@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import javax.sound.sampled.AudioFormat;
 import sonoMain.Cortador;
 
 /**
@@ -35,7 +36,7 @@ public class RealTime {
     public LocalDateTime horaInicio;
     public Cortador cortador;
 
-    Minim minim;
+    public Minim minim;
     AudioPlayer player;
     AudioInput input;
     AudioRecorder recorder;
@@ -87,7 +88,7 @@ public class RealTime {
      */
     public void quitprogram() {
         input.close();
-        player.close();
+        //player.close();
         minim.stop();
     }
 
@@ -127,12 +128,20 @@ public class RealTime {
         float[] dArray;
        // FilePlayer filePlayer = new FilePlayer(minim.loadFileStream(fileName));
         AudioSample sound = minim.loadSample(fileName);
-        System.out.println("/n sound buffer "+sound.left.toString());
         dArray = sound.getChannel(sound.LEFT);
         System.out.println("dArray size  "+dArray.length);
-        for(int i =0 ; i< dArray.length; i++){
-        System.out.println( dArray[i]+"\n");
+//        for(int i =0 ; i< dArray.length; i++){
+//        System.out.println("\n ["+i+"]= "+ dArray[i]);
+//        }
+        //já manda os dados para o cortador 
+        horaInicio=LocalDateTime.now();
+        AudioFormat af=sound.getFormat();
+        float rms=0;
+        for(int i=0;i<dArray.length;i++){
+                rms+=Math.pow(dArray[i], 2);
         }
+        rms=(float) Math.sqrt(rms/dArray.length);
+        cortador.cortarAudio(dArray, rms, (int) af.getSampleRate(), horaInicio);
       sound.close();
         
          
