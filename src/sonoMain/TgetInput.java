@@ -68,6 +68,7 @@ public class TgetInput extends Thread {
             }
             else if(input.equals("exit")==true){
                 realtime.quitprogram();
+                gerenciador.fecharGerenciador();
                 Runtime.getRuntime().exit(0);
             }
             
