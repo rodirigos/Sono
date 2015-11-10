@@ -130,10 +130,10 @@ public class GerenciadorEventos {
       */
     public void floatToWavsingle(Evento e){
             float waveSampleRate = 8192f;
-            byte[] floConv = new byte[8192*3];
+            byte[] floConv = new byte[e.audioData.length];
          AudioFormat format = new AudioFormat(waveSampleRate, 8, 1, true, true);
         try {
-                float2byteInterleaved(e.audioData, 0, floConv, 0, 8192*3, format, 0);
+                float2byteInterleaved(e.audioData, 0, floConv, 0, e.audioData.length, format, 0);
                 ByteArrayInputStream ais = new ByteArrayInputStream(floConv);
                 AudioInputStream inputStream = new AudioInputStream(ais, format, floConv.length);
                 String str = "./dados/Amostrasing";
