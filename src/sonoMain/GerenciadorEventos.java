@@ -55,7 +55,7 @@ public class GerenciadorEventos {
         // Chama a classe para exportar o evento para o wav
         floatToWavsingle(e);
         //chama a classe CSV para guardar o evento
-        csvGenerate.CreateCsv(eventosRegistrados);
+        csvGenerate.saveEvent(e);
         
     }
 
