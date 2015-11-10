@@ -43,6 +43,7 @@ public class TgetInput extends Thread {
                          "\n import-- importa o áudio em AudioSample "+
                          "\n events-- lista todos os eventos do sistema por data"+
                          "\n show INDEX-- mostra os dados de um evento"+
+                         "\n export-- Exportar os roncos para o formato wav"+
                          "\n exit-- sai do programa");
         while(stop!=true){
             String input=in.nextLine();
@@ -63,7 +64,7 @@ public class TgetInput extends Thread {
                 //depois eu faço isso, nem sei se precisa =p
             }
             else if(input.equals("export")==true){
-                gerenciador.floatToWav(realtime);
+                gerenciador.floatToWavAll();
             }
             else if(input.equals("exit")==true){
                 realtime.quitprogram();
