@@ -44,7 +44,7 @@ public class GenerateCsv {
      * @param gerEventos: Gerenciador de eventos finalizado e pronto para gerar
      * o csv
      */
-    public void CreateCsv(ArrayList<Evento> gerEventos) {
+    public void saveAllEvents(ArrayList<Evento> gerEventos) {
         try {
             for (int i = 0; i < gerEventos.size(); i++) {
               
@@ -64,6 +64,25 @@ public class GenerateCsv {
             writer.flush();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    
+    public void saveEvent(Evento e){
+        try {
+                writer.append(String.valueOf(e.horaRegistro.getHour()));
+                writer.append(",");
+                writer.append(String.valueOf(e.horaRegistro.getMinute()));
+                writer.append(",");
+                writer.append(String.valueOf(e.horaRegistro.getSecond()));
+                writer.append(",");
+                writer.append(e.tipo);
+                writer.append(",");
+                writer.append(String.valueOf(e.temperatura));
+                writer.append(",");
+                writer.append(String.valueOf(e.umidade));
+                writer.append("\n");
+        } catch (IOException ex) {
+            Logger.getLogger(GenerateCsv.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
