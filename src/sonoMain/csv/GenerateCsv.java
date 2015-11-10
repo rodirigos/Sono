@@ -29,7 +29,7 @@ public class GenerateCsv {
     public GenerateCsv(String nome) {
         try {
              this.writer = new FileWriter(nome);
-             String campos = "Hora,Minuto,Segundo,Tipo,Umidade, Temperatura\n";
+             String campos = "Hora,Minuto,Segundo,Tipo,Umidade, Temperatura \n";
              writer.append(campos);
              writer.flush();
         } catch (IOException ex) {
@@ -59,7 +59,9 @@ public class GenerateCsv {
                 writer.append(String.valueOf(gerEventos.get(i).temperatura));
                 writer.append(",");
                 writer.append(String.valueOf(gerEventos.get(i).umidade));
-                writer.append("\n");
+                writer.append(",");
+            //    writer.append(String.valueOf(gerEventos.get(i).url));
+           //     writer.append("\n");
             }
             writer.flush();
         } catch (IOException e) {

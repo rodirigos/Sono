@@ -20,6 +20,8 @@ public class Evento {
     public String tipo;
     public float temperatura;
     public float umidade;
+    public String url;
+    
     
     public Evento(LocalDateTime hora, float[] audio,String t){
         horaRegistro=hora;

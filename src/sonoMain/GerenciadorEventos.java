@@ -5,19 +5,10 @@
  */
 package sonoMain;
 
-import Teste.FloatSampleTools;
-import static Teste.FloatSampleTools.float2byte;
 import static Teste.FloatSampleTools.float2byteInterleaved;
-import ddf.minim.AudioRecorder;
-import ddf.minim.AudioSample;
-import ddf.minim.Minim;
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
@@ -28,7 +19,6 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import sonoMain.Serial.SerialRead;
 import sonoMain.csv.GenerateCsv;
-import sonoMain.realtime.RealTime;
 
 /**
  *
@@ -38,6 +28,7 @@ public class GerenciadorEventos {
 
     private ArrayList<Evento> eventosRegistrados;
     private GenerateCsv csvGenerate = new GenerateCsv("Eventos.csv");
+    private int contadorEventos =0;
 
     public GerenciadorEventos() {
         eventosRegistrados = new ArrayList();
@@ -58,9 +49,14 @@ public class GerenciadorEventos {
         System.out.println("\nCLASSE GERENCIADOR :\n\tAdiconou evento em: " + e.horaRegistro.toString()
                 + "\n tipo: " + e.tipo + "\n audio: " + Arrays.toString(e.audioData));
         //chama a classe contas apra avaliar o evento
-
+        
+        //Contando o evento
+        contadorEventos++;
+        // Chama a classe para exportar o evento para o wav
+        floatToWavsingle(e);
         //chama a classe CSV para guardar o evento
         csvGenerate.CreateCsv(eventosRegistrados);
+        
     }
 
     /**
@@ -101,39 +97,56 @@ public class GerenciadorEventos {
      * desse parametro funciona apenas por motivo de debug e nao deve ser usada
      * como o audio natural porque peder qualidade na conversao
      *
-     * @param minim: referencia do minim para utilizar biblioteca
      */
-    public void floatToWav(RealTime realTime) {
+    public void floatToWavAll() {
         float waveSampleRate = 8192f;
         // Os tres segundos a serem convertidos
         byte[] floConv = new byte[8192*3];
         System.out.println("Entrei no exportador Vetor = " + eventosRegistrados.size() + "\n");
-        AudioFormat format = new AudioFormat(waveSampleRate, 8, 1, true, true);
-        
-        
+        AudioFormat format = new AudioFormat(waveSampleRate, 8, 1, true, true);      
         // Criando 
         for (int i = 0; i < eventosRegistrados.size(); i++) {
             try {
                 float2byteInterleaved(eventosRegistrados.get(i).audioData, 0, floConv, 0, 8192*3, format, 0);
                 ByteArrayInputStream ais = new ByteArrayInputStream(floConv);
                 AudioInputStream inputStream = new AudioInputStream(ais, format, floConv.length);
-                String str = "amostra";
+                String str = "./dados/amostra";
                 str = str.concat(String.valueOf(i));
                 str = str.concat(".wav");
                 System.out.println("A string tem nome de:" + str);
+                eventosRegistrados.get(i).url  = str.substring(1);
                 AudioSystem.write(inputStream, AudioFileFormat.Type.WAVE, new File(str));
                 System.out.println("Os audios foram exportados com sucesso");
             } catch (IOException ex) {
                 Logger.getLogger(GerenciadorEventos.class.getName()).log(Level.SEVERE, null, ex);
             }
-
         }
 
     }
-/*
-    public InputStream createInput(String fileName) throws FileNotFoundException {
-        InputStream inputStream = new FileInputStream(fileName);
-        return inputStream;
+     /***
+      *Criando wav a partir de um evento
+      * 
+     * @param e: Evento que vai ser transformado
+      */
+    public void floatToWavsingle(Evento e){
+            float waveSampleRate = 8192f;
+            byte[] floConv = new byte[8192*3];
+         AudioFormat format = new AudioFormat(waveSampleRate, 8, 1, true, true);
+        try {
+                float2byteInterleaved(e.audioData, 0, floConv, 0, 8192*3, format, 0);
+                ByteArrayInputStream ais = new ByteArrayInputStream(floConv);
+                AudioInputStream inputStream = new AudioInputStream(ais, format, floConv.length);
+                String str = "./dados/Amostrasing";
+                str = str.concat(String.valueOf(contadorEventos));
+                str = str.concat(".wav");
+                System.out.println("A string tem nome de:" + str);
+                e.url = str.substring(1);
+                AudioSystem.write(inputStream, AudioFileFormat.Type.WAVE, new File(str));
+                System.out.println("Os audios foram exportados com sucesso");
+            } catch (IOException ex) {
+                Logger.getLogger(GerenciadorEventos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    
     }
-*/
+
 }
