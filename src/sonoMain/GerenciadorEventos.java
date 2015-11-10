@@ -72,7 +72,7 @@ public class GerenciadorEventos {
     public void fecharGerenciador() {
         // Mandar comandos para o led ficar vermelho
         // Fechando o csv gerado
-        csvGenerate.saveAllEvents(eventosRegistrados);
+        //csvGenerate.saveAllEvents(eventosRegistrados);
         csvGenerate.CloseCsv();
     }
 

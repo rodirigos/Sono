@@ -17,7 +17,8 @@ import sonoMain.contas.Contas;
 public class Cortador {
 
     public static final float TRESHOLD = 3;
-    public static final float TEMPO_JANELA = 0.20f; // 8192*0,25 dá 2048, que é o número de amostras por janela
+    public static final float TEMPO_JANELA = 0.20f; // 8192*0,25 dÃ¡ 2048, que Ã© o nÃºmero de amostras por janela
+    public static final int CORTE_SIZE= 8192; 
     private GerenciadorEventos gerenciador;
     private Contas contas;
 
@@ -27,7 +28,7 @@ public class Cortador {
     }
 
     /**
-     * Método chamado cada vez que o cortador separar um evento de áudio de 3s
+     * MÃ©todo chamado cada vez que o cortador separar um evento de Ã¡udio de 3s
      *
      * @param horaCalculada
      * @param sinalEvento
@@ -39,8 +40,8 @@ public class Cortador {
     }
 
     /**
-     * Método chamado pela Classe AudioDataListener (dentro do Realtime) a cada
-     * vez que a gravação atinge 10s
+     * MÃ©todo chamado pela Classe AudioDataListener (dentro do Realtime) a cada
+     * vez que a gravaÃ§Ã£o atinge 10s
      *
      * @param sinalOriginal
      * @param rmsSinal
@@ -72,7 +73,7 @@ public class Cortador {
             } else {
                 indiceTempFim = i + amostrasJanela;
             }
-            //pega o valor máximo da janela
+            //pega o valor mÃ¡ximo da janela
             float tempMax = 0;
             for (int j = indiceTempInicio; j < indiceTempFim; j++) {
                 if (sinalOriginal[j] > tempMax) {
@@ -85,7 +86,7 @@ public class Cortador {
                 indicesJanelas.add(i);
                 int indicesLen=indicesJanelas.size();
                 if(indicesLen>1){
-                    //verifica se a distancia entre duas janelas é menor que 3 janelas
+                    //verifica se a distancia entre duas janelas Ã© menor que 3 janelas
                     System.out.println("\n indiceComparado=" +indicesJanelas.get(indicesLen-2));
                     if (i - indicesJanelas.get(indicesLen-2) <= 0.6f * freqAmostragem) {
                         //concatena as janelas
@@ -94,7 +95,7 @@ public class Cortador {
 //                        }
                         System.out.println("indicesJanelas "+Arrays.toString(indicesJanelas.toArray()));
                     }
-                    else{//distancia entre janelas é>0.6, chegou no proximo sinal
+                    else{//distancia entre janelas Ã©>0.6, chegou no proximo sinal
                         System.out.println("\n distancia entre janelas maior que 0,6");
                         System.out.println("indicesJanelas "+Arrays.toString(indicesJanelas.toArray()));
                         int indiceCorteInicio=indicesJanelas.get(0);
@@ -107,7 +108,7 @@ public class Cortador {
                             System.out.println(" indicesJanelasSelecionadas "+Arrays.toString(indicesJanelas.toArray()));
                             int indiceCentral=(indiceCorteFim-indiceCorteInicio)/2 +indiceCorteInicio;
                             System.out.println("\n indiceCentral= "+indiceCentral);
-                            //verifica se nao vai ficar antes do começo do vetor
+                            //verifica se nao vai ficar antes do comeÃ§o do vetor
                             if(indiceCentral-1.5f*freqAmostragem>0){
                                 indiceCorteInicio=(int) (indiceCentral-1.5f*freqAmostragem);
                             }
@@ -125,13 +126,13 @@ public class Cortador {
                             System.out.println("\n corteLen: "+corteLen+
                                     "indiceCorteInicio: "+indiceCorteInicio+
                                     "indiceCorteFim: "+indiceCorteFim);
-                            //copia o pedaço do sinal desejado
+                            //copia o pedaÃ§o do sinal desejado
                             float sinalCortado[] = new float[corteLen];
                             System.arraycopy(sinalOriginal, indiceCorteInicio, sinalCortado, 0, corteLen);
                             float tempoCorte=indiceCorteInicio/freqAmostragem;
                             System.out.println("\n segundos depois do inicio: "+tempoCorte);
                             LocalDateTime horaEvento= horaInicio.plusSeconds((long) tempoCorte);
-                            registrarEvento(horaEvento, sinalCortado, "Possível Ronco");
+                            registrarEvento(horaEvento, sinalCortado, "PossÃ­vel Ronco");
                             indicesJanelas.clear();
                             indicesJanelas.add(i);
                         }
@@ -143,7 +144,7 @@ public class Cortador {
                     }
                 }    
             }
-        }//se o evento detectado era o único ou o último
+        }//se o evento detectado era o Ãºnico ou o Ãºltimo
         int indicesLen=indicesJanelas.size();
         if(indicesLen>=1){
             int indiceCorteInicio=indicesJanelas.get(0);
@@ -156,16 +157,17 @@ public class Cortador {
                             System.out.println(" indicesJanelasSelecionadas "+Arrays.toString(indicesJanelas.toArray()));
                             int indiceCentral=(indiceCorteFim-indiceCorteInicio)/2 +indiceCorteInicio;
                             System.out.println("\n indiceCentral= "+indiceCentral);
-                            //verifica se nao vai ficar antes do começo do vetor
-                            if(indiceCentral-1.5f*freqAmostragem>0){
-                                indiceCorteInicio=(int) (indiceCentral-1.5f*freqAmostragem);
+                            System.out.println("\n CORTE_SIZE "+Cortador.CORTE_SIZE);
+                            //verifica se nao vai ficar antes do comeÃ§o do vetor
+                            if(indiceCentral-Cortador.CORTE_SIZE>0){
+                                indiceCorteInicio=(int) (indiceCentral-Cortador.CORTE_SIZE);
                             }
                             else{
                                 indiceCorteInicio=0;
                             }
                             //verifica se vai passar do tamamanho do vetor
-                            if(indiceCentral+1.5f*freqAmostragem<sinalLen){
-                                indiceCorteFim=(int) (indiceCentral+1.5f*freqAmostragem);
+                            if(indiceCentral+Cortador.CORTE_SIZE<sinalLen){
+                                indiceCorteFim=(int) (indiceCentral+Cortador.CORTE_SIZE);
                             }
                             else{
                                 indiceCorteFim=sinalLen;
@@ -174,13 +176,13 @@ public class Cortador {
                             System.out.println("\n corteLen: "+corteLen+
                                     "indiceCorteInicio: "+indiceCorteInicio+
                                     "indiceCorteFim: "+indiceCorteFim);
-                            //copia o pedaço do sinal desejado
+                            //copia o pedaÃ§o do sinal desejado
                             float sinalCortado[] = new float[corteLen];
                             System.arraycopy(sinalOriginal, indiceCorteInicio, sinalCortado, 0, corteLen);
                             float tempoCorte=indiceCentral/freqAmostragem;
                             System.out.println("\n segundos depois do inicio: "+tempoCorte);
                             LocalDateTime horaEvento= horaInicio.plusSeconds((long) tempoCorte);
-                            registrarEvento(horaEvento, sinalCortado, "Possível Ronco");
+                            registrarEvento(horaEvento, sinalCortado, "Indeterminado");
                         }
         }
     }
