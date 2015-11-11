@@ -18,8 +18,10 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import sonoMain.Serial.SerialRead;
+import sonoMain.contas.Contas;
 import sonoMain.csv.GenerateCsv;
-
+import sonoMain.Cortador;
+import sonoMain.realtime.RealTime;
 /**
  *
  * @author luisfg30
@@ -29,7 +31,8 @@ public class GerenciadorEventos {
     private ArrayList<Evento> eventosRegistrados;
     private GenerateCsv csvGenerate = new GenerateCsv("Eventos.csv");
     private int contadorEventos =0;
-
+    private Contas contas = new Contas();
+    
     public GerenciadorEventos() {
         eventosRegistrados = new ArrayList();
     }
@@ -50,12 +53,17 @@ public class GerenciadorEventos {
                 + "\n tipo: " + e.tipo + "\n audio: " + Arrays.toString(e.audioData));
         //chama a classe contas apra avaliar o evento
         
+         System.out.println("O sinal no calc faixas e: " + e.audioData.length);
+        if(contas.calcFaixas(e.audioData, RealTime.SAMPLE_RATE) == true){
+            e.tipo = "Ronco";
+        }else{
+            e.tipo = "Nao ronco";
+        }  
         //Contando o evento
         contadorEventos++;
         // Chama a classe para exportar o evento para o wav
         floatToWavsingle(e);
         //chama a classe CSV para guardar o evento
-       
         csvGenerate.saveEvent(e);
         
     }
@@ -131,10 +139,10 @@ public class GerenciadorEventos {
       */
     public void floatToWavsingle(Evento e){
             float waveSampleRate = 8192f;
-            byte[] floConv = new byte[8192*3];
+            byte[] floConv = new byte[e.audioData.length];
          AudioFormat format = new AudioFormat(waveSampleRate, 8, 1, true, true);
         try {
-                float2byteInterleaved(e.audioData, 0, floConv, 0, 8192*3, format, 0);
+                float2byteInterleaved(e.audioData, 0, floConv, 0, e.audioData.length, format, 0);
                 ByteArrayInputStream ais = new ByteArrayInputStream(floConv);
                 AudioInputStream inputStream = new AudioInputStream(ais, format, floConv.length);
                 String str = "./dados/Amostrasing";

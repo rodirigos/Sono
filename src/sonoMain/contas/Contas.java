@@ -33,7 +33,8 @@ public class Contas {
 
     public boolean calcFaixas(float[] sinalOriginal, int freqAmostragem) {
         FFT fft = new FFT(sinalOriginal.length, freqAmostragem);
-
+       
+        
         fft.forward(sinalOriginal);
         float vetor[] = fft.getSpectrum();
 
@@ -237,15 +238,15 @@ public class Contas {
     }
 
     public float[] ordenado(float[] vetor) {
-
+        System.out.println("Tamanho veto ordenado:" + vetor.length);
         ArrayList<Float> array = new ArrayList();
-       
-        for (int i = 0; i < array.size(); i++) {
+      
+        for (int i = 0; i < vetor.length; i++) {
             array.add(vetor[i]);
 
         }
-        
         float[] vetorordenado = new float[array.size()];
+
         CustomComparator c = new CustomComparator();
         Collections.sort(array, c);
 
