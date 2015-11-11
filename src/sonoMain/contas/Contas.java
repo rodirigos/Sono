@@ -239,12 +239,13 @@ public class Contas {
     public float[] ordenado(float[] vetor) {
 
         ArrayList<Float> array = new ArrayList();
-        float[] vetorordenado = new float[array.size()];
+       
         for (int i = 0; i < array.size(); i++) {
             array.add(vetor[i]);
 
         }
-
+        
+        float[] vetorordenado = new float[array.size()];
         CustomComparator c = new CustomComparator();
         Collections.sort(array, c);
 
