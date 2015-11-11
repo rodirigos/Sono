@@ -18,8 +18,10 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import sonoMain.Serial.SerialRead;
+import sonoMain.contas.Contas;
 import sonoMain.csv.GenerateCsv;
-
+import sonoMain.Cortador;
+import sonoMain.realtime.RealTime;
 /**
  *
  * @author luisfg30
@@ -29,7 +31,8 @@ public class GerenciadorEventos {
     private ArrayList<Evento> eventosRegistrados;
     private GenerateCsv csvGenerate = new GenerateCsv("Eventos.csv");
     private int contadorEventos =0;
-
+    private Contas contas = new Contas();
+    
     public GerenciadorEventos() {
         eventosRegistrados = new ArrayList();
     }
@@ -50,6 +53,12 @@ public class GerenciadorEventos {
                 + "\n tipo: " + e.tipo + "\n audio: " + Arrays.toString(e.audioData));
         //chama a classe contas apra avaliar o evento
         
+         System.out.println("O sinal no calc faixas e: " + e.audioData.length);
+        if(contas.calcFaixas(e.audioData, RealTime.SAMPLE_RATE) == true){
+            e.tipo = "Ronco";
+        }else{
+            e.tipo = "Indeterminado";
+        }  
         //Contando o evento
         contadorEventos++;
         // Chama a classe para exportar o evento para o wav

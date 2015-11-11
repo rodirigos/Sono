@@ -151,7 +151,7 @@ public class Cortador {
         int indicesLen=indicesJanelas.size();
         if(indicesLen>=1){
             int indiceCorteInicio=indicesJanelas.get(0);
-                        int indiceCorteFim=indicesJanelas.get(indicesJanelas.size()-2)+amostrasJanela;
+                        int indiceCorteFim=indicesJanelas.get(indicesJanelas.size()-1)+amostrasJanela;
                         int corteLen=indiceCorteFim-indiceCorteInicio;
                         System.out.println("\nindiceInicio="+indiceCorteInicio+
                                 " indiceFim= "+indiceCorteFim);
