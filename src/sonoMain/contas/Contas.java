@@ -155,15 +155,16 @@ public class Contas {
         return resposta;
     }
 
-    public boolean equacao_1(float[] energiaFreqRates, float[] freq) {
-
+   public boolean equacao_1(float[] energiaFreqRates, float[] freq) {
+        int j;
+ 
         int[] auxiliarIndiceOriginal = new int[13];
-        float[] vetorordenado = ordenado(energiaFreqRates);
-              
+        float[] vetorordenado = ordenado_bolha(energiaFreqRates);
+
         //encontrando o indice do vetor de energia ordenado com o original
-        for (int i = 0; i < 13; i++) {
-            for (int j = 0; j < 13; j++) {
-                if (vetorordenado[i] == energiaFreqRates[j]) {
+        for (int i = 0; i < 13; i++) {      
+            for (j = 0; j < 13; j++) {   
+               if (vetorordenado[i] == energiaFreqRates[j]) {
                     auxiliarIndiceOriginal[i] = j;
                 } 
             }
@@ -226,33 +227,24 @@ public class Contas {
         }        
     }
 
-    /**
-     * Classe auxiliar para ordenar os elementos de um ArrayList
-     */
-    class CustomComparator implements Comparator<Float> {
-
-        @Override
-        public int compare(Float o1, Float o2) {
-            return (int) (o1.floatValue() - o2.floatValue());
+    public float[] ordenado_bolha(float[] vetor){
+        float[] vetorordenado = new float[vetor.length];
+        float aux;
+        int j,i;
+        
+        for(i = 0; i < vetorordenado.length; i++){
+            vetorordenado[i]=vetor[i];
         }
-    }
-
-    public float[] ordenado(float[] vetor) {
-        System.out.println("Tamanho veto ordenado:" + vetor.length);
-        ArrayList<Float> array = new ArrayList();
-      
-        for (int i = 0; i < vetor.length; i++) {
-            array.add(vetor[i]);
-
-        }
-        float[] vetorordenado = new float[array.size()];
-
-        CustomComparator c = new CustomComparator();
-        Collections.sort(array, c);
-
-        for (int i = 0; i < array.size(); i++) {
-            vetorordenado[i] = array.get(i);
-        }
+               
+        for (i = 0; i < vetorordenado.length; i++) {  
+            for (j = 0; j < vetorordenado.length; j++) {  
+                if (vetorordenado[i]<vetorordenado[j]) {  
+                    aux=vetorordenado[j];
+                    vetorordenado[j]=vetorordenado[i]; 
+                    vetorordenado[i]=aux; 
+                }  
+            }  
+        }  
         return vetorordenado;
     }
 
