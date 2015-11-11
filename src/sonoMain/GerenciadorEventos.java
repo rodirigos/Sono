@@ -57,7 +57,7 @@ public class GerenciadorEventos {
         if(contas.calcFaixas(e.audioData, RealTime.SAMPLE_RATE) == true){
             e.tipo = "Ronco";
         }else{
-            e.tipo = "Indeterminado";
+            e.tipo = "Nao ronco";
         }  
         //Contando o evento
         contadorEventos++;
