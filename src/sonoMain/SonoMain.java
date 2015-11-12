@@ -11,6 +11,8 @@ import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import sonoMain.Serial.SerialRead;
@@ -29,7 +31,7 @@ public class SonoMain extends JFrame{
     public static SerialRead sRead = new SerialRead();
     private RealTime audiotest;
     private Scanner inputKey = new Scanner(System.in);
-    public SerialRead serRead = new SerialRead();
+    public static SerialRead serRead = new SerialRead();
     
     
     //GUI
@@ -43,7 +45,11 @@ public class SonoMain extends JFrame{
         JFrame frame = new SonoMain(cortador,gerenciador);
         frame.pack();
         frame.setVisible(true);
-      
+        try {
+            serRead.serialStart();
+        } catch (Exception ex) {
+            Logger.getLogger(SonoMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     

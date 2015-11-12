@@ -26,8 +26,9 @@ public class SerialRead implements SerialPortEventListener {
      * The port we're normally going to use.
      */
     private static final String PORT_NAMES[] = {"//dev/tty.usbserial-A9007UX1", // Mac OS X
-        "/dev/ttyACM0", // Linux
         "COM3", // Windows
+        "/dev/ttymxc3",//udooo
+        "/dev/ttyACM0",
 };
     private BufferedReader input;
     private OutputStream output;
@@ -117,7 +118,7 @@ public class SerialRead implements SerialPortEventListener {
         }
         // Ignore all the other eventTypes, but you should consider the other ones.
     }
-    public static void serialStart() throws Exception {
+    public  void serialStart() throws Exception {
         SerialRead main = new SerialRead();
         main.initialize();
         Thread t = new Thread() {
